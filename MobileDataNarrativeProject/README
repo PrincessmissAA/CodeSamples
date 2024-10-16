@@ -1,0 +1,14 @@
+In 2 - 3 sentences, please explain what data visualization you choose to edit and why?
+
+
+I chose to do a mix of a lollipop, connected scatterplot, and area graph. This makes it easier to visually pick out the different data points. I’m also hoping to add in chart transition animations.
+
+What modifications did you make to your data visualization? Please list all of them.
+
+
+I wasn’t able to start making the graphs, I was looking for resources on how to stack the graphs, so that I had a better understanding of different graph styles to choose based on my understanding of it.
+
+https://stackoverflow.com/questions/29759171/combining-multiple-d3-charts-of-different-types
+https://plotly.com/javascript/graphing-multiple-chart-types/
+https://flowingdata.com/2013/01/17/how-to-animate-transitions-between-multiple-charts/
+
