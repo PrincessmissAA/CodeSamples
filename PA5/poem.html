@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+    <head>            
+        <title></title>
+        <script>
+            window.addEventListener('load',() => {
+                // JavaScript code goes here
+                //console.log('Hello!');
+                document.getElementById('poemTitle').innerHTML = 'No website can be worse than EPIC';
+                document.getElementById('firstVerse').innerHTML = 'When I was younger I used to hate using Google on my phone';
+                document.getElementById('secondVerse').innerHTML = 'Now I don\'\t mind it that much';
+                document.getElementById('thirdVerse').innerHTML = 'I have had to adapt so much';
+                document.getElementById('fourthVerse').innerHTML = 'Now any user interface but EPIC looks amazing';
+                document.getElementsByClassName('refrain')[1].innerHTML = 'EPIC has set a new standard for me';
+                document.getElementsByClassName('refrain')[0].innerHTML = 'EPIC has set a new standard for me';
+
+                document.getElementById('poemTitle').style.fontSize = '64px';
+                document.getElementById('poemTitle').style.color = 'pink';
+                document.getElementById('poemTitle').style.backgroundColor = 'black';
+
+                document.getElementById('firstVerse').style.fontSize = '32px';
+                document.getElementById('firstVerse').style.color = 'black';
+                document.getElementById('firstVerse').style.backgroundColor = 'pink';
+
+                document.getElementById('secondVerse').style.fontSize = '32px';
+                document.getElementById('secondVerse').style.color = 'black';
+                document.getElementById('secondVerse').style.backgroundColor = 'pink';
+
+                document.getElementById('thirdVerse').style.fontSize = '32px';
+                document.getElementById('thirdVerse').style.color = 'black';
+                document.getElementById('thirdVerse').style.backgroundColor = 'pink';
+
+                document.getElementById('fourthVerse').style.fontSize = '32px';
+                document.getElementById('fourthVerse').style.color = 'black';
+                document.getElementById('fourthVerse').style.backgroundColor = 'pink';
+
+                document.getElementsByClassName('refrain')[0].style.fontSize = '32px';
+                document.getElementsByClassName('refrain')[0].style.color = 'pink';
+                document.getElementsByClassName('refrain')[0].style.backgroundColor = 'black';
+
+                document.getElementsByClassName('refrain')[1].style.fontSize = '32px';
+                document.getElementsByClassName('refrain')[1].style.color = 'pink';
+                document.getElementsByClassName('refrain')[1].style.backgroundColor = 'black';
+                
+                document.getElementById('body').style.background = 'linear-gradient(orange, white)';
+                
+            });
+        </script>
+    </head>
+    <body id='body'>
+        <h1 id='poemTitle'></h1>
+        <p><b>First verse</b>: <span id='firstVerse'></span></p>
+        <p><b>Second verse</b>: <span id='secondVerse'></span></p>
+        <p><b>Refrain</b>: <span class='refrain'></span></p>
+        <p><b>Third verse</b>: <span id='thirdVerse'></span></p>
+        <p><b>Fourth verse</b>: <span id='fourthVerse'></span></p>
+        <p><b>Refrain</b>: <span class='refrain'></span></p>
+    </body>
+</html>
