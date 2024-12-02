@@ -13,26 +13,22 @@
                 document.getElementById('fourthVerse').innerHTML = 'Now any user interface but EPIC looks amazing';
                 document.getElementsByClassName('refrain')[1].innerHTML = 'EPIC has set a new standard for me';
                 document.getElementsByClassName('refrain')[0].innerHTML = 'EPIC has set a new standard for me';
+                
+                const verses = ['firstVerse', 'secondVerse', 'thirdVerse', 'fourthVerse'];
+
+                for(i = 0; i < verses.length; i++){
+                    document.getElementById(verses[i]).style.fontSize = '32px';
+                    document.getElementById(verses[i]).style.color = 'black';
+                    document.getElementById(verses[i]).style.backgroundColor = 'pink';
+                    document.getElementById(verses[i]).style.border = 'inset';
+                    document.getElementById(verses[i]).style.padding = '10px';
+                    document.getElementById(verses[i]).style.textShadow = '2px 2px 2px white';
+                    document.getElementById(verses[i]).style.border = 'inset';
+                }
 
                 document.getElementById('poemTitle').style.fontSize = '64px';
                 document.getElementById('poemTitle').style.color = 'pink';
                 document.getElementById('poemTitle').style.backgroundColor = 'black';
-
-                document.getElementById('firstVerse').style.fontSize = '32px';
-                document.getElementById('firstVerse').style.color = 'black';
-                document.getElementById('firstVerse').style.backgroundColor = 'pink';
-
-                document.getElementById('secondVerse').style.fontSize = '32px';
-                document.getElementById('secondVerse').style.color = 'black';
-                document.getElementById('secondVerse').style.backgroundColor = 'pink';
-
-                document.getElementById('thirdVerse').style.fontSize = '32px';
-                document.getElementById('thirdVerse').style.color = 'black';
-                document.getElementById('thirdVerse').style.backgroundColor = 'pink';
-
-                document.getElementById('fourthVerse').style.fontSize = '32px';
-                document.getElementById('fourthVerse').style.color = 'black';
-                document.getElementById('fourthVerse').style.backgroundColor = 'pink';
 
                 document.getElementsByClassName('refrain')[0].style.fontSize = '32px';
                 document.getElementsByClassName('refrain')[0].style.color = 'pink';
