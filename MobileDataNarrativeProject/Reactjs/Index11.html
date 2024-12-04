@@ -1,0 +1,232 @@
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <style>
+        table,
+        th,
+        td {
+            border: 2px black solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class='col-md-12 text-center'>
+                <h1>Precure</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-md-2'></div>
+            <div id='precureTable' class='col-md-8 table-responsive'></div>
+            <div class='col-md-2'></div>
+        </div>
+
+    </div>
+    <script>
+        let tableData = [
+        {
+            YearAired: 2006,
+            FiscalYear: 2007,
+            Name: "Futari Wa Precure Splash Star",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2007,
+            FiscalYear: 2008,
+            Name: "Yes! Precure 5",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2008,
+            FiscalYear: 2009,
+            Name: "Yes! Precure 5 Gogo!",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2009,
+            FiscalYear: 2010,
+            Name: "Fresh Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2010,
+            FiscalYear: 2011,
+            Name: "Heartcatch Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Suite Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Smile Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Dokidoki Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Happiness Charge Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Go! Princess Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Maho Girls Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Kira Kira Precure a la mode",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Hugtto Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Star Twinkle Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Healin' Good Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Tropical Rouge Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Delicous Party Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        {
+            YearAired: 2011,
+            FiscalYear: 2012,
+            Name: "Hero Girl Sky Precure",
+            QuaterOne: 0,
+            QuaterTwo: 0,
+            QuaterThree: 0,
+            QuaterFour: 0
+        },
+        ];
+        const tableMaker = (data = []) => {
+            let table = ``;
+            // check if data is an array and not empty
+            if (Array.isArray(data) && data.length > 0) {
+                table = `<table class="text-center table">
+                    <tr>
+                        <th>YearAired</th>
+                        <th>FiscalYear</th>
+                        <th>Name</th>
+                        <th>QuaterOne</th>
+                        <th>QuaterTwo</th>
+                        <th>QuaterThree</th>
+                        <th>QuaterFour</th>
+                    </tr>`;
+                for (let x = 0; x < data.length; x++) {
+                    table += `<tr>
+                        <td>${data[x].YearAired}</td>
+                        <td>${data[x].FiscalYear}</td>
+                        <td>${data[x].Name}</td>
+                        <td>${data[x].QuaterOne}</td>
+                        <td>${data[x].QuaterTwo}</td>
+                        <td>${data[x].QuaterThree}</td>
+                        <td>${data[x].QuaterFour}</td>
+                    </tr>
+                    `;
+                }
+            }
+            table += `</table>`
+            return table;
+        }
+
+        document.getElementById('precureTable').innerHTML = tableMaker(tableData);
+    </script>
+</body>
+
+</html>
