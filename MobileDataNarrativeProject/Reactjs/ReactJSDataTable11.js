@@ -12,14 +12,16 @@
             });
         };
     
+        const togglePopularityPoll = () => {
+            props.updateFormState((prevState) => ({
+                showPopularityPoll: !prevState.showPopularityPoll,
+            }));
+        };
+    
         return (
             <React.Fragment>
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-1"></div>
-                        <div className="col-md-3">
-                            <b>Filter Options:</b>
-                        </div>
                         <div className="col-md-2">
                             <select onChange={updateQuarter}>
                                 <option value="">--Select Quarter--</option>
@@ -38,12 +40,23 @@
                                 Show Japan GDP
                             </label>
                         </div>
-                        <div className="col-md-3"></div>
+                        <div className="col-md-3">
+                            <button
+                                className="btn btn-primary"
+                                onClick={togglePopularityPoll}
+                            >
+                                {props.showPopularityPoll
+                                    ? "Hide Popularity Poll"
+                                    : "Show Popularity Poll"}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </React.Fragment>
         );
     };
+    
+    
     
 
     const DataTable = (props) => {
@@ -65,6 +78,7 @@
                                     <th>Name</th>
                                     {props.selectedQuater && <th>{props.selectedQuater}</th>}
                                     {props.showJapanGDP && <th>Japan GDP</th>}
+                                    {props.showPopularityPoll && <th>Popularity Poll</th>}
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,6 +89,7 @@
                                         <td>{row.Name}</td>
                                         {props.selectedQuater && <td>{row[props.selectedQuater]}</td>}
                                         {props.showJapanGDP && <td>{row.JapanGDP}</td>}
+                                        {props.showPopularityPoll && <td>{row.PopularityPoll}</td>}
                                     </tr>
                                 ))}
                             </tbody>
@@ -87,6 +102,8 @@
     };
     
     
+    
+    
 
     class ReactDataTable extends React.Component {
         constructor(props) {
@@ -96,13 +113,18 @@
             this.state = {
                 Quater: '',
                 showJapanGDP: false,
+                showPopularityPoll: false,
             };
     
             this.updateFormState = this.updateFormState.bind(this);
         }
     
         updateFormState(specification) {
-            this.setState(specification);
+            if (typeof specification === 'function') {
+                this.setState((prevState) => specification(prevState));
+            } else {
+                this.setState(specification);
+            }
         }
     
         render() {
@@ -114,23 +136,30 @@
                     YearAired: row.YearAired,
                     FiscalYear: row.FiscalYear,
                     [this.state.Quater]: row[this.state.Quater],
-                    ...(this.state.showJapanGDP && { JapanGDP: row.JapanGDP }), // Include JapanGDP only if checkbox is checked
+                    ...(this.state.showJapanGDP && { JapanGDP: row.JapanGDP }),
+                    ...(this.state.showPopularityPoll && { PopularityPoll: row.PopularityPoll }),
                 }));
             }
     
             return (
                 <React.Fragment>
-                    <Filters updateFormState={this.updateFormState} />
+                    <Filters
+                        updateFormState={this.updateFormState}
+                        showPopularityPoll={this.state.showPopularityPoll}
+                    />
                     <hr />
                     <DataTable
                         dataToDisplay={filteredData}
                         selectedQuater={this.state.Quater}
                         showJapanGDP={this.state.showJapanGDP}
+                        showPopularityPoll={this.state.showPopularityPoll}
                     />
                 </React.Fragment>
             );
         }
     }
+    
+    
     
     const PrettyCureData = [
         {
