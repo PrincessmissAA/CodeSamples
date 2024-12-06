@@ -1,131 +1,137 @@
 (() => {
     const Filters = (props) => {
-        let updateQuater = (clickEvent) => {
+        const updateQuarter = (clickEvent) => {
             props.updateFormState({
                 Quater: clickEvent.target.value,
             });
-        }
-        let updateFeedingStatus = (clickEvent) => {
+        };
+    
+        const toggleJapanGDP = (clickEvent) => {
             props.updateFormState({
-                isOnlyFeeding: clickEvent.target.checked,
+                showJapanGDP: clickEvent.target.checked,
             });
-        }
-        
-        return(
+        };
+    
+        return (
             <React.Fragment>
-                <div className='container'>
-                    <div className='row'>
-                        <div className='col-md-1'></div>
-                        <div className='col-md-3'>
-                            <b></b>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-1"></div>
+                        <div className="col-md-3">
+                            <b>Filter Options:</b>
                         </div>
-                        <div className='col-md-2'>
-                            <select
-                                onChange={updateQuarter} 
-                            >
-                                <option>QuaterOne</option> //these need to be changed to ranges
-                                <option>QuaterTwo</option>
-                                <option>QuaterThree</option>
-                                <option>QuaterFour</option>
+                        <div className="col-md-2">
+                            <select onChange={updateQuarter}>
+                                <option value="">--Select Quarter--</option>
+                                <option value="QuaterOne">Quarter One</option>
+                                <option value="QuaterTwo">Quarter Two</option>
+                                <option value="QuaterThree">Quarter Three</option>
+                                <option value="QuaterFour">Quarter Four</option>
                             </select>
                         </div>
-                        <div className='col-md-3'></div>
-                        <div className='col-md-2'></div>
-                        <div className='col-md-1'></div>
+                        <div className="col-md-3">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    onChange={toggleJapanGDP}
+                                />{" "}
+                                Show Japan GDP
+                            </label>
+                        </div>
+                        <div className="col-md-3"></div>
                     </div>
                 </div>
             </React.Fragment>
-        )
-    }
+        );
+    };
+    
 
     const DataTable = (props) => {
-        return(
+        return (
             <div className="container">
                 <div className="row">
-                <div className="col-md-12 text-center">
-                <h1>Precure</h1>
+                    <div className="col-md-12 text-center">
+                        <h1>Precure</h1>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-2"></div>
+                    <div id="precureTable" className="col-md-8 table-responsive">
+                        <table className="text-center table">
+                            <thead>
+                                <tr>
+                                    <th>Year Aired</th>
+                                    <th>Fiscal Year</th>
+                                    <th>Name</th>
+                                    {props.selectedQuater && <th>{props.selectedQuater}</th>}
+                                    {props.showJapanGDP && <th>Japan GDP</th>}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {props.dataToDisplay.map((row, i) => (
+                                    <tr key={i}>
+                                        <td>{row.YearAired}</td>
+                                        <td>{row.FiscalYear}</td>
+                                        <td>{row.Name}</td>
+                                        {props.selectedQuater && <td>{row[props.selectedQuater]}</td>}
+                                        {props.showJapanGDP && <td>{row.JapanGDP}</td>}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="col-md-2"></div>
+                </div>
             </div>
-        </div>
-        <div className="row">
-            <div className="col-md-2"></div>
-            <div id="precureTable" className="col-md-8 table-responsive"><table className="text-center table">
-                    <tbody><tr>
-                        <th>Year aired</th>
-                        <th>Fiscal Year</th>
-                        <th>Name</th>
-                        <th>Quater One</th>
-                        <th>Quater Two</th>
-                        <th>Quater Three</th>
-                        <th>Quater Four</th>
-                        <th>Japan GDP</th>
-                        <th>Company Profit</th>
-                        <th>Popularity Poll</th>
-                    </tr>
-                    {props.dataToDisplay.map((row, i) => {
-                        return (
-                            <tr key={i}>
-                                <td>{row.YearAired}</td>
-                                <td>{row.FiscalYear}</td>
-                                <td>{row.Name}</td>
-                                <td>{row.QuaterOne}</td>
-                                <td>{row.QuaterTwo}</td>
-                                <td>{row.QuaterThree}</td>
-                                <td>{row.QuaterFour}</td>
-                                <td>{row.JapanGDP}</td>
-                                <td>{row.CompanyProfit}</td>
-                                <td>{row.PopularityPoll}</td>
-                            </tr>
-    );
-})}
-                    </tbody></table></div>
-            <div className="col-md-2"></div>
-        </div>
-
-    </div>
-        )
-    }
+        );
+    };
+    
+    
 
     class ReactDataTable extends React.Component {
-    constructor(props) {
-        super(props);
-        this.originalData = props.originalData;
-
-        this.state = {
-            Quater: '',
-            isOnlyFeeding: false,
-        };
-
-        this.updateFormState = this.updateFormState.bind(this);
-    } 
-
-    updateFormState(specification) {
-        this.setState(specification);
-    } 
-
+        constructor(props) {
+            super(props);
+            this.originalData = props.originalData;
+    
+            this.state = {
+                Quater: '',
+                showJapanGDP: false,
+            };
+    
+            this.updateFormState = this.updateFormState.bind(this);
+        }
+    
+        updateFormState(specification) {
+            this.setState(specification);
+        }
+    
         render() {
             let filteredData = this.originalData;
-
+    
             if (this.state.Quater !== '') {
-                    filteredData = filteredData.filter(
-                        (row) => row.Quater === this.state.Quater //this is looking for a row titled quarter when there isn't one
-                    );
+                filteredData = filteredData.map((row) => ({
+                    Name: row.Name,
+                    YearAired: row.YearAired,
+                    FiscalYear: row.FiscalYear,
+                    [this.state.Quater]: row[this.state.Quater],
+                    ...(this.state.showJapanGDP && { JapanGDP: row.JapanGDP }), // Include JapanGDP only if checkbox is checked
+                }));
             }
-
+    
             return (
                 <React.Fragment>
-                    <filters
-                        updateFormState={this.updateFormState}
-                    />
-
+                    <Filters updateFormState={this.updateFormState} />
                     <hr />
-                    
-                    <DataTable 
+                    <DataTable
                         dataToDisplay={filteredData}
+                        selectedQuater={this.state.Quater}
+                        showJapanGDP={this.state.showJapanGDP}
                     />
                 </React.Fragment>
             );
         }
     }
+    
     const PrettyCureData = [
         {
             "YearAired": 2006,
@@ -350,3 +356,5 @@
 	const root = ReactDOM.createRoot(container);
 	root.render(<ReactDataTable originalData={PrettyCureData} />);
 })();
+
+//I used chatGDP to help with making the filters
