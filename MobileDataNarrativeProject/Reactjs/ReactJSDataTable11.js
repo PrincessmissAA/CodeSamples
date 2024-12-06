@@ -1,8 +1,8 @@
 (() => {
     const Filters = (props) => {
-        let updateDamageType = (clickEvent) => {
+        let updateQuater = (clickEvent) => {
             props.updateFormState({
-                damageType: clickEvent.target.value,
+                Quater: clickEvent.target.value,
             });
         }
         let updateFeedingStatus = (clickEvent) => {
@@ -21,11 +21,12 @@
                         </div>
                         <div className='col-md-2'>
                             <select
-                                onChange={updateDamageType} 
+                                onChange={updateQuarter} 
                             >
-                                <option></option>
-                                <option>Happy</option>
-                                <option>Sad</option>
+                                <option>QuaterOne</option>
+                                <option>QuaterTwo</option>
+                                <option>QuaterThree</option>
+                                <option>QuaterFour</option>
                             </select>
                         </div>
                         <div className='col-md-3'></div>
@@ -56,6 +57,9 @@
                         <th>Quater Two</th>
                         <th>Quater Three</th>
                         <th>Quater Four</th>
+                        <th>Japan GDP</th>
+                        <th>Company Profit</th>
+                        <th>Popularity Poll</th>
                     </tr>
                     {props.dataToDisplay.map((row, i) => {
                         return (
@@ -67,6 +71,9 @@
                                 <td>{row.QuaterTwo}</td>
                                 <td>{row.QuaterThree}</td>
                                 <td>{row.QuaterFour}</td>
+                                <td>{row.JapanGDP}</td>
+                                <td>{row.CompanyProfit}</td>
+                                <td>{row.PopularityPoll}</td>
                             </tr>
     );
 })}
@@ -84,7 +91,7 @@
         this.originalData = props.originalData;
 
         this.state = {
-            damageType: '',
+            Quater: '',
             isOnlyFeeding: false,
         };
 
@@ -98,9 +105,9 @@
         render() {
             let filteredData = this.originalData;
 
-            if (this.state.damageType !== '') {
+            if (this.state.Quater !== '') {
                     filteredData = filteredData.filter(
-                        (row) => row.damageType === this.state.damageType
+                        (row) => row.Quater === this.state.Quater
                     );
             }
 
@@ -193,8 +200,8 @@
             "PopularityPoll": 2 + "nd"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2012,
+            "FiscalYear": 2013,
             "Name": "Smile Precure",
             "QuaterFour": 10.7,
             "QuaterOne": 2.8,
@@ -205,8 +212,8 @@
             "PopularityPoll": 9 + "th"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2013,
+            "FiscalYear": 2014,
             "Name": "Dokidoki Precure",
             "QuaterFour": 10.6,
             "QuaterOne": 2.4,
@@ -217,8 +224,8 @@
             "PopularityPoll": 13 + "th"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2014,
+            "FiscalYear": 2015,
             "Name": "Happiness Charge Precure",
             "QuaterFour": 9.8,
             "QuaterOne": 1.9,
@@ -229,8 +236,8 @@
             "PopularityPoll": 20 + "th"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2015,
+            "FiscalYear": 2016,
             "Name": "Go! Princess Precure",
             "QuaterFour": 6.5,
             "QuaterOne": 1.6,
@@ -241,8 +248,8 @@
             "PopularityPoll": 6 + "th"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2016,
+            "FiscalYear": 2017,
             "Name": "Maho Girls Precure",
             "QuaterFour": 6.6,
             "QuaterOne": 1.6,
@@ -253,8 +260,8 @@
             "PopularityPoll": 3 + "rd"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2017,
+            "FiscalYear": 2018,
             "Name": "Kira Kira Precure a la mode",
             "QuaterFour": 7.5,
             "QuaterOne": 1.8,
@@ -265,8 +272,8 @@
             "PopularityPoll": 18 + "th"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2018,
+            "FiscalYear": 2019,
             "Name": "Hugtto Precure",
             "QuaterFour": 8.1,
             "QuaterOne": 2.5,
@@ -277,8 +284,8 @@
             "PopularityPoll": 11 + "th"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2019,
+            "FiscalYear": 2020,
             "Name": "Star Twinkle Precure",
             "QuaterFour": 10.1,
             "QuaterOne": 2.3,
@@ -289,40 +296,52 @@
             "PopularityPoll": 19 + "th"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2020,
+            "FiscalYear": 2021,
             "Name": "Healin' Good Precure",
-            "QuaterOne": 0,
-            "QuaterTwo": 0,
-            "QuaterThree": 0,
-            "QuaterFour": 0
+            "QuaterFour": 8.3,
+            "QuaterOne": 1.8,
+            "QuaterTwo": 3.3,
+            "QuaterThree": 4.4,
+            "JapanGDP": -4.15 + "%",
+            "CompanyProfit": 282006,
+            "PopularityPoll": 17 + "th"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2021,
+            "FiscalYear": 2022,
             "Name": "Tropical Rouge Precure",
-            "QuaterOne": 0,
-            "QuaterTwo": 0,
-            "QuaterThree": 0,
-            "QuaterFour": 0
+            "QuaterFour": 6.6,
+            "QuaterOne": 1.6,
+            "QuaterTwo": 3,
+            "QuaterThree": 3.7,
+            "JapanGDP": 3 + "%",
+            "CompanyProfit": 356266,
+            "PopularityPoll": 14 + "th"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2022,
+            "FiscalYear": 2023,
             "Name": "Delicous Party Precure",
-            "QuaterOne": 0,
-            "QuaterTwo": 0,
-            "QuaterThree": 0,
-            "QuaterFour": 0
+            "QuaterFour": 5.7,
+            "QuaterOne": 1.3,
+            "QuaterTwo": 2.9,
+            "QuaterThree": 3.5,
+            "JapanGDP": 0.96 + "%",
+            "CompanyProfit": 368656,
+            "PopularityPoll": 7 + "%"
         },
         {
-            "YearAired": 2011,
-            "FiscalYear": 2012,
+            "YearAired": 2023,
+            "FiscalYear": 2024,
             "Name": "Hero Girl Sky Precure",
-            "QuaterOne": 0,
-            "QuaterTwo": 0,
-            "QuaterThree": 0,
-            "QuaterFour": 0
+            "QuaterFour": 5.6,
+            "QuaterOne": 1.2,
+            "QuaterTwo": 2.8,
+            "QuaterThree": 4.3,
+            "JapanGDP": 1.92 + "%",
+            "CompanyProfit": 370959,
+            "PopularityPoll": 15 + "th"
         },
 ];
 
