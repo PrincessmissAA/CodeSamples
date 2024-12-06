@@ -173,7 +173,7 @@
             "QuaterThree": 8.5,
             "JapanGDP": -5.69 + "%",
             "CompanyProfit": 128753,
-            "PopularityPoll": 10 + "10"
+            "PopularityPoll": 10 + "th"
         },
         {
             "YearAired": 2010,
@@ -329,7 +329,7 @@
             "QuaterThree": 3.5,
             "JapanGDP": 0.96 + "%",
             "CompanyProfit": 368656,
-            "PopularityPoll": 7 + "%"
+            "PopularityPoll": 7 + "th"
         },
         {
             "YearAired": 2023,
