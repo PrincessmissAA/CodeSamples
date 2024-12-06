@@ -23,7 +23,7 @@
                             <select
                                 onChange={updateQuarter} 
                             >
-                                <option>QuaterOne</option>
+                                <option>QuaterOne</option> //these need to be changed to ranges
                                 <option>QuaterTwo</option>
                                 <option>QuaterThree</option>
                                 <option>QuaterFour</option>
