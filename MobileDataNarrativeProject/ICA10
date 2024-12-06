@@ -36,11 +36,11 @@ PrecureDataSet  [
 ]
 
 //Read the data
-//d3.csv"https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/connectedscatter.csv",
+d3.csv"https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/connectedscatter.csv",
 
   // When reading the csv, I must format variables:
-  //d => {
-      //return {date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value}}).then(
+  d => {
+      return {date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value}}).then(
 
   // Now I can use this dataset:
   function(PrecureDataSet) {

@@ -107,7 +107,7 @@
 
             if (this.state.Quater !== '') {
                     filteredData = filteredData.filter(
-                        (row) => row.Quater === this.state.Quater
+                        (row) => row.Quater === this.state.Quater //this is looking for a row titled quarter when there isn't one
                     );
             }
 
