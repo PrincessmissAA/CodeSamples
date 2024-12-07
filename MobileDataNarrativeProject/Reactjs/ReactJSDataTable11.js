@@ -18,6 +18,15 @@
             }));
         };
     
+        const updateProfitRange = (field, value) => {
+            props.updateFormState((prevState) => ({
+                companyProfitRange: {
+                    ...prevState.companyProfitRange,
+                    [field]: value,
+                },
+            }));
+        };
+    
         return (
             <React.Fragment>
                 <div className="container">
@@ -50,11 +59,33 @@
                                     : "Show Popularity Poll"}
                             </button>
                         </div>
+                        <div className="col-md-4">
+                            <div>
+                                <label>Company Profit Range:</label>
+                                <input
+                                    type="number"
+                                    placeholder="Min"
+                                    onChange={(e) =>
+                                        updateProfitRange("min", e.target.value)
+                                    }
+                                    style={{ margin: "0 5px" }}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Max"
+                                    onChange={(e) =>
+                                        updateProfitRange("max", e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </React.Fragment>
         );
     };
+    
+    
     
     
     
@@ -77,6 +108,7 @@
                                     <th>Fiscal Year</th>
                                     <th>Name</th>
                                     {props.selectedQuater && <th>{props.selectedQuater}</th>}
+                                    <th>Company Profit</th>
                                     {props.showJapanGDP && <th>Japan GDP</th>}
                                     {props.showPopularityPoll && <th>Popularity Poll</th>}
                                 </tr>
@@ -88,6 +120,7 @@
                                         <td>{row.FiscalYear}</td>
                                         <td>{row.Name}</td>
                                         {props.selectedQuater && <td>{row[props.selectedQuater]}</td>}
+                                        <td>{row.CompanyProfit}</td>
                                         {props.showJapanGDP && <td>{row.JapanGDP}</td>}
                                         {props.showPopularityPoll && <td>{row.PopularityPoll}</td>}
                                     </tr>
@@ -104,6 +137,8 @@
     
     
     
+    
+    
 
     class ReactDataTable extends React.Component {
         constructor(props) {
@@ -114,6 +149,7 @@
                 Quater: '',
                 showJapanGDP: false,
                 showPopularityPoll: false,
+                companyProfitRange: { min: '', max: '' },
             };
     
             this.updateFormState = this.updateFormState.bind(this);
@@ -138,7 +174,19 @@
                     [this.state.Quater]: row[this.state.Quater],
                     ...(this.state.showJapanGDP && { JapanGDP: row.JapanGDP }),
                     ...(this.state.showPopularityPoll && { PopularityPoll: row.PopularityPoll }),
+                    CompanyProfit: row.CompanyProfit, // Always include CompanyProfit for filtering
                 }));
+            }
+    
+            const { min, max } = this.state.companyProfitRange;
+            if (min || max) {
+                filteredData = filteredData.filter((row) => {
+                    const profit = row.CompanyProfit;
+                    return (
+                        (!min || profit >= parseFloat(min)) &&
+                        (!max || profit <= parseFloat(max))
+                    );
+                });
             }
     
             return (
@@ -158,6 +206,7 @@
             );
         }
     }
+    
     
     
     
