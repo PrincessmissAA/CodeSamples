@@ -1,0 +1,40 @@
+/* General Styles */
+body {
+    background-color: pink;
+}
+
+h1, h2, h3 {
+    font-size: 36px;
+    text-align: center;
+}
+
+/* Class Selectors */
+.highlight {
+    background-color: yellow;
+    padding: 10px;
+}
+
+.italicized {
+    font-style: italic;
+    color: darkblue;
+}
+
+.content {
+    background-image: url('https://cdn.shopify.com/s/files/1/0416/8083/0620/files/11-9_HK_1500x2000_A.png?v=1699393413');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 500px;
+}
+
+/* ID Selectors */
+#precure-list, #hello-kitty-list, #violet-list {
+    font-size: 20px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+
+#precure-list li, #hello-kitty-list li, #violet-list li {
+    margin-bottom: 0.5rem;
+}
