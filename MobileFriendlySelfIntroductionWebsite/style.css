@@ -52,3 +52,25 @@ img:hover {
         transform: rotate(45deg);
     }
 }
+
+@media (max-width: 768px) {
+    .grid-container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* CSS for Responsive Grid */
+  .grid-container {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .responsive-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+
+  .table-container {
+    margin-top: 2rem;
+  }
