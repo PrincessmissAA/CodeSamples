@@ -25,6 +25,7 @@ h1, h2, h3 {
     background-position: center;
     background-repeat: no-repeat;
     height: 500px;
+    overflow: hidden;
 }
 
 /* ID Selectors */
@@ -37,6 +38,11 @@ h1, h2, h3 {
 
 #precure-list li, #hello-kitty-list li, #violet-list li {
     margin-bottom: 0.5rem;
+}
+
+.image-container {
+    overflow: hidden;
+    position: relative;
 }
 
 img:hover {
@@ -74,3 +80,9 @@ img:hover {
   .table-container {
     margin-top: 2rem;
   }
+
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
