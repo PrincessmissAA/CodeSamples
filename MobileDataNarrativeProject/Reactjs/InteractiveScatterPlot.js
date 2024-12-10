@@ -1,4 +1,4 @@
-const margin = { top: 30, right: 30, bottom: 120, left: 80 },
+const margin = { top: 30, right: 140, bottom: 120, left: 80 },
     width = 760 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
 
@@ -98,18 +98,67 @@ document.addEventListener("DOMContentLoaded", function () {
       .attr("stroke", "white");
 
   // Add a legend
-  svg.selectAll("myLegend")
-      .data(dataReady)
-      .join('g')
-      .append("text")
-      .attr("x", (d, i) => 30 + i * 80)
-      .attr("y", 30)
-      .text(d => d.name)
-      .style("fill", d => myColor(d.name))
-      .style("font-size", 12)
-      .on("click", function(event, d) {
-        const currentOpacity = d3.selectAll("." + d.name).style("opacity");
-        d3.selectAll("." + d.name).transition().style("opacity", currentOpacity == 1 ? 0 : 1);
-      });
+const legend = svg.append("g")
+.attr("transform", `translate(${width + 20}, ${margin.top})`); // Position to the right of the chart
+
+// Add legend items
+legend.selectAll("myLegend")
+.data(dataReady)
+.join('g')
+.attr("transform", (d, i) => `translate(0, ${i * 20})`) // Space out legend items vertically
+.call(g => {
+    g.append("circle")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("r", 6)
+        .style("fill", d => myColor(d.name));
+    g.append("text")
+        .attr("x", 10)
+        .attr("y", 0)
+        .attr("dy", "0.35em")
+        .style("font-size", "12px")
+        .text(d => d.name)
+        .style("fill", d => myColor(d.name));
+});
+
+// Add the lines
+svg.selectAll("myLines")
+    .data(dataReady)
+    .join("path")
+    .attr("class", d => d.name)
+    .attr("d", d => line(d.values))
+    .attr("stroke", d => myColor(d.name))
+    .style("stroke-width", 2)
+    .style("fill", "none")
+    .on("mouseover", function (event, d) {
+        // Highlight the hovered line
+        d3.select(this)
+            .style("stroke-width", 4)
+            .style("opacity", 1);
+
+        // Add tooltip text
+        const tooltip = svg.append("text")
+            .attr("id", "hover-text")
+            .attr("x", event.layerX - margin.left)
+            .attr("y", margin.top)
+            .style("font-size", "14px")
+            .style("font-weight", "bold")
+            .attr("text-anchor", "middle")
+            .text(d.name)
+            .attr("background-color", "lightgray")
+            .attr("padding", "5px")
+            .attr("border-radius", "5px");
+
+    })
+    .on("mouseout", function (event, d) {
+        // Revert line style
+        d3.select(this)
+            .style("stroke-width", 2)
+            .style("opacity", 0.8);
+
+        // Remove tooltip text
+        svg.select("#hover-text").remove();
+    });
+
 });
   
