@@ -1,121 +1,115 @@
+const margin = { top: 30, right: 30, bottom: 120, left: 80 },
+    width = 760 - margin.left - margin.right,
+    height = 700 - margin.top - margin.bottom;
+
+// Append the SVG object to the #my_dataviz container
+
 document.addEventListener("DOMContentLoaded", function () {
-    // Set the dimensions and margins of the graph
-    const margin = { top: 10, right: 100, bottom: 30, left: 30 },
-          width = 460 - margin.left - margin.right,
-          height = 400 - margin.top - margin.bottom;
-  
-    // Append the SVG object to the body of the page
-    const svg = d3.select("#my_dataviz")
+  d3.select("#my_dataviz").selectAll("*").remove();
+  const svg = d3.select("#my_dataviz")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
+      console.log(svg.node());
   
     // Inline dataset
     const PrecureQuarterDataSet = [
-        { Name: "Futari Wa Precure Splash Star", QuarterFourData: 12.3, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0 },
-        { Name: "Yes! Precure 5", QuarterFourData: 6, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Yes! Precure 5 Gogo!", QuarterFourData: 10.5, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Fresh Precure", QuarterFourData: 10.5, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Heartcatch Precure", QuarterFourData: 11.9, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Suite Precure", QuarterFourData: 12.5, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Smile Precure", QuarterFourData: 10.7, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "DokiDoki Precure", QuarterFourData: 10.6, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Happiness Charge Precure", QuarterFourData: 9.8, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Go! Princess Precure", QuarterFourData: 6.5, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Maho Tsukai Precure", QuarterFourData: 6.6, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Kirakira Precure A la Mode", QuarterFourData: 7.5, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Hugtto Precure", QuarterFourData: 8.1, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Star Twinkle Precure", QuarterFourData: 10.1, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Healin' Good Precure", QuarterFourData: 8.3, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Tropical Rouge Precure", QuarterFourData: 6.6, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Delicious Party Precure", QuarterFourData: 5.7, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
-        { Name: "Hero Girl Sky Precure", QuarterFourData: 5.6, QuarterOneData: 0, QuarterTwoData: 0, QuarterThreeData: 0  },
+        { Name: "Futari Wa Precure Splash Star", QuarterFourData: 12.3, QuarterOneData: 1.8, QuarterTwoData: 3.3, QuarterThreeData: 4.3 },
+        { Name: "Yes! Precure 5", QuarterFourData: 6, QuarterOneData: 1.7, QuarterTwoData: 5.1, QuarterThreeData: 7.9  },
+        { Name: "Yes! Precure 5 Gogo!", QuarterFourData: 10.5, QuarterOneData: 2.8, QuarterTwoData: 5.5, QuarterThreeData: 7.5  },
+        { Name: "Fresh Precure", QuarterFourData: 10.5, QuarterOneData: 2.3, QuarterTwoData: 5.7, QuarterThreeData: 8.5  },
+        { Name: "Heartcatch Precure", QuarterFourData: 11.9, QuarterOneData: 3.2, QuarterTwoData: 6.8, QuarterThreeData: 9.6  },
+        { Name: "Suite Precure", QuarterFourData: 12.5, QuarterOneData: 2.6, QuarterTwoData: 5.2, QuarterThreeData: 7.4  },
+        { Name: "Smile Precure", QuarterFourData: 10.7, QuarterOneData: 2.8, QuarterTwoData: 5.7, QuarterThreeData: 7.5  },
+        { Name: "DokiDoki Precure", QuarterFourData: 10.6, QuarterOneData: 2.4, QuarterTwoData: 4.9, QuarterThreeData: 6.5  },
+        { Name: "Happiness Charge Precure", QuarterFourData: 9.8, QuarterOneData: 1.9, QuarterTwoData: 3.6, QuarterThreeData: 4.5  },
+        { Name: "Go! Princess Precure", QuarterFourData: 6.5, QuarterOneData: 1.6, QuarterTwoData: 3.4, QuarterThreeData: 4.4  },
+        { Name: "Maho Tsukai Precure", QuarterFourData: 6.6, QuarterOneData: 1.6, QuarterTwoData: 3.6, QuarterThreeData: 4.9  },
+        { Name: "Kirakira Precure A la Mode", QuarterFourData: 7.5, QuarterOneData: 1.8, QuarterTwoData: 3.8, QuarterThreeData: 5.4  },
+        { Name: "Hugtto Precure", QuarterFourData: 8.1, QuarterOneData: 2.5, QuarterTwoData: 5.1, QuarterThreeData: 7.1  },
+        { Name: "Star Twinkle Precure", QuarterFourData: 10.1, QuarterOneData: 2.3, QuarterTwoData: 4.5, QuarterThreeData: 5.8  },
+        { Name: "Healin' Good Precure", QuarterFourData: 8.3, QuarterOneData: 1.8, QuarterTwoData: 3.3, QuarterThreeData: 4.4  },
+        { Name: "Tropical Rouge Precure", QuarterFourData: 6.6, QuarterOneData: 1.6, QuarterTwoData: 3, QuarterThreeData: 3.7  },
+        { Name: "Delicious Party Precure", QuarterFourData: 5.7, QuarterOneData: 1.3, QuarterTwoData: 2.9, QuarterThreeData: 3.5  },
+        { Name: "Hero Girl Sky Precure", QuarterFourData: 5.6, QuarterOneData: 1.2, QuarterTwoData: 2.8, QuarterThreeData: 4.3  },
       ];
   
     // List of groups
-    const allGroup = ["QuaterFourData", "QuarterOneData", "QuarterTwoData"];
-  
-    // Reformat the data
-    const dataReady = allGroup.map(grpName => ({
-      name: grpName,
-      values: data.map(d => ({ Name: d.Name, Quarter: d[grpName] }))
-    }));
-  
-    // Color scale
-    const myColor = d3.scaleOrdinal()
+    const allGroup = ["QuarterOneData", "QuarterTwoData", "QuarterThreeData", "QuarterFourData"];
+
+  // Reformat the data
+  const dataReady = allGroup.map(grpName => ({
+    name: grpName,
+    values: PrecureQuarterDataSet.map(d => ({ Name: d.Name, value: d[grpName] }))
+  }));
+
+  // Color scale
+  const myColor = d3.scaleOrdinal()
       .domain(allGroup)
       .range(d3.schemeSet2);
-  
-    // Add X axis
-    const x = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.Name)])
-      .range([0, width]);
-    svg.append("g")
+
+  // Add X axis
+  const x = d3.scalePoint()
+      .domain(PrecureQuarterDataSet.map(d => d.Name))
+      .range([0, width])
+      .padding(0.5);
+
+  svg.append("g")
       .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x));
-  
-    // Add Y axis
-    const y = d3.scaleLinear()
-      .domain([0, d3.max(data, d => Math.max(d.QuarterFourData, d.QuarterOneData, d.QuarterTwoData))])
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .attr("transform", "rotate(-45)")
+      .style("text-anchor", "end");
+
+  // Add Y axis
+  const y = d3.scaleLinear()
+      .domain([0, d3.max(PrecureQuarterDataSet, d => Math.max(d.QuarterOneData, d.QuarterTwoData, d.QuarterThreeData, d.QuarterFourData))])
       .range([height, 0]);
-    svg.append("g")
-      .call(d3.axisLeft(y));
-  
-    // Add the lines
-    const line = d3.line()
+
+  svg.append("g").call(d3.axisLeft(y));
+
+  // Add the lines
+  const line = d3.line()
       .x(d => x(d.Name))
-      .y(d => y(d.Quarter));
-    svg.selectAll("myLines")
+      .y(d => y(d.value));
+
+  svg.selectAll("myLines")
       .data(dataReady)
       .join("path")
       .attr("class", d => d.name)
       .attr("d", d => line(d.values))
       .attr("stroke", d => myColor(d.name))
-      .style("stroke-width", 4)
+      .style("stroke-width", 2)
       .style("fill", "none");
-  
-    // Add the points
-    svg.selectAll("myDots")
+
+  // Add points
+  svg.selectAll("myDots")
       .data(dataReady)
       .join('g')
       .style("fill", d => myColor(d.name))
-      .attr("class", d => d.name)
-      .selectAll("myPoints")
+      .selectAll("circle")
       .data(d => d.values)
       .join("circle")
       .attr("cx", d => x(d.Name))
-      .attr("cy", d => y(d.Quater))
+      .attr("cy", d => y(d.value))
       .attr("r", 5)
       .attr("stroke", "white");
-  
-    // Add a label at the end of each line
-    svg.selectAll("myLabels")
+
+  // Add a legend
+  svg.selectAll("myLegend")
       .data(dataReady)
       .join('g')
       .append("text")
-      .attr("class", d => d.name)
-      .datum(d => ({ name: d.name, Quarter: d.values[d.values.length - 1] }))
-      .attr("transform", d => `translate(${x(d.Quarter.Name)},${y(d.Quarter.Quarter)})`)
-      .attr("x", 12)
+      .attr("x", (d, i) => 30 + i * 80)
+      .attr("y", 30)
       .text(d => d.name)
       .style("fill", d => myColor(d.name))
-      .style("font-size", 15);
-  
-    // Add a legend (interactive)
-    svg.selectAll("myLegend")
-      .data(dataReady)
-      .join('g')
-      .append("text")
-      .attr('x', (d, i) => 30 + i * 60)
-      .attr('y', 30)
-      .text(d => d.name)
-      .style("fill", d => myColor(d.name))
-      .style("font-size", 15)
+      .style("font-size", 12)
       .on("click", function(event, d) {
         const currentOpacity = d3.selectAll("." + d.name).style("opacity");
         d3.selectAll("." + d.name).transition().style("opacity", currentOpacity == 1 ? 0 : 1);
       });
-  });
+});
   
