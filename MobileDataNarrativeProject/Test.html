@@ -1,27 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <title>D3 Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
+    <script src="https://d3js.org/d3-cloud.v1.min.js"></script>
 </head>
 <body>
-  <div id="my_dataviz" style="width: 300px; height: 300px; border: 1px solid black;"></div>
-  <script>
-    const svg = d3.select("#my_dataviz")
-      .append("svg")
-      .attr("width", 300)
-      .attr("height", 300)
-      .style("background-color", "lightgray");
+    <div id="test"></div>
+    <script>
+        console.log(d3.layout.cloud); // Test if library is loaded
 
-    svg.append("circle")
-      .attr("cx", 150)
-      .attr("cy", 150)
-      .attr("r", 50)
-      .attr("fill", "blue");
-
-    console.log("SVG and circle created.");
-  </script>
+        if (typeof d3.layout.cloud === "function") {
+            console.log("D3 Cloud library loaded successfully!");
+        } else {
+            console.error("D3 Cloud library failed to load.");
+        }
+    </script>
 </body>
 </html>

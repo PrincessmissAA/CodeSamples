@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .attr("cx", d => x(d.Name))
         .attr("cy", d => y1(d.CompanyProfit))
         .attr("r", 5)
-        .attr("fill", "#69b3a2")
+        .attr("fill", "White")
         .on("mouseover", function (event, d) {
             d3.select(this)
                 .attr("r", 20) 
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .attr("cx", d => x(d.Name))
         .attr("cy", d => y2(d.QuarterFourData))
         .attr("r", 5)
-        .attr("fill", "#ff4b5c")
+        .attr("fill", "black")
         .on("mouseover", function (event, d) {
             d3.select(this)
                 .attr("r", 20) // Increase radius
