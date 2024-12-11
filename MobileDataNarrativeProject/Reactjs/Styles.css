@@ -9,20 +9,28 @@
             background-color: #FFDBE9;
             overflow: hidden;
         }
-        nav a {
-            float: left;
-            display: block;
-            color: #FFDBE9;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-family: 'BrandyScript', sans-serif;
-            font-size: 64px;
-        }
+        
         nav a:hover {
             background-color: #FFDBE9;
             color: black;
         }
+        /* Adjust the font size for the navigation bar */
+        nav a {
+            font-family: 'BrandyScript', sans-serif;
+            font-size: 32px; 
+            color: #FFFFFF; 
+            text-align: center;
+            text-decoration: none;
+            padding: 10px 20px; 
+        }
+
+/* Center-align the navigation items */
+        .navbar-nav {
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: center;
+        }
+
         .container {
             padding: 20px;
         }
@@ -43,5 +51,14 @@
             src: url('Milkyway\ DEMO.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
+        }
+
+        #reactDataTableNarrativeText {
+            font-family: 'Milkyway', sans-serif;
+            font-size: 24px; 
+            color: black; 
+            text-align: center;
+            text-decoration: none;
+            padding: 10px 20px; 
         }
         

@@ -21,30 +21,31 @@
 <body>
     <!-- Navigation Bar -->
     <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <i class="fa-regular fa-heart"></i> ICA11
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#" onclick="showPage('react-table')">
-                        <i class="fas fa-table"></i> React Data Table
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="showPage('scatter-plot')">
-                        <i class="fas fa-chart-line"></i> Graphs
-                    </a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fa-regular fa-heart"></i> ICA11
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showPage('react-table')">
+                            <i class="fas fa-table"></i> React Data Table
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('scatter-plot')">
+                            <i class="fas fa-chart-line"></i> Graphs
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+    
 
 
     <!-- Content -->
@@ -80,9 +81,11 @@
 
         <!-- React Data Table Page -->
         <div id="react-table" class="page active">
-            <h2 class="text-center">Narrative</h2>
+            <div class="image-container">
+                <img src="pretty_cure_all_stars_f_banner__v2__by_dominickdr98_dfvsjep-fullview.jpg" class="img-fluid" alt="Narrative">
+              </div>
+            <h2 class="text-center">Pretty Cure</h2>
             <div id="narrative-text" class="mb-4"></div>
-            <h3 class="text-center">React Data Table</h3>
             <div id="react-data-table" class="table-responsive"></div>
             <script type="text/babel" src="ReactJSDataTable11.js"></script>
         </div>
