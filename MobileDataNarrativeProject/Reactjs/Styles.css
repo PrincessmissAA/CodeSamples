@@ -3,21 +3,22 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #FFDBE9;
         }
         nav {
-            background-color: #333;
+            background-color: #FFDBE9;
             overflow: hidden;
         }
         nav a {
             float: left;
             display: block;
-            color: white;
+            color: #FFDBE9;
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
         }
         nav a:hover {
-            background-color: #ddd;
+            background-color: #FFDBE9;
             color: black;
         }
         .container {

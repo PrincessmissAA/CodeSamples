@@ -1,42 +1,41 @@
 <!doctype html>
 <html>
-    <head>            
-        <title></title>
-        <script>
-            // Load the narrative text from Narrative.html into the React Data Table page
-            document.addEventListener('DOMContentLoaded', () => {
-                fetch('Narrative.html')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        // Insert the fetched HTML content directly into the #narrative-text div
-                        document.getElementById('narrative-text').innerHTML = data;
-                    })
-                    .catch(err => {
-                        console.error('Failed to load narrative:', err);
-                        document.getElementById('narrative-text').innerHTML = `
-                            <p class="text-danger">Failed to load the narrative. Please try again later.</p>`;
-                    });
-            });
-        </script>
-        
-    </head>
-    <body>
-        <div>
-            <h3>What is this Narrative About?</h3>
-            <p>
-                My topic is on the anthropology series Precure otherwise known as Pretty Cure. This series has been running for the past twenty one years, and has been often described as the love child between Sailor Moon and Super Sentai. This is a data analysis of its toy sales over the span of 18 of its years. This comparison was done to truly see which season is the best since that Toei Animation declares the success of a season based off of its toy sales. This cross compared to Japan GPDm, and Bandai Namicos total company sales should give us our answer. I got the majority of my data from Bandai Namicos financial report. This was cross compared to the weekly financial report that is broadcasted in Japan for Japanese stock holders. Below are two transformations from the show itself, the first one is Cure Flora from Go! Princess Precure and the second is Cure Nynammy from Wonderful Precure.
-            </p>
-            <p>
-                <iframe src="https://www.youtube.com/watch?v=FoGZC5NkULQ" allowfullscreen></iframe>
-                <iframe src="https://www.youtube.com/watch?v=0NOK2JZ5pdQ" allowfullscreen></iframe>
-            </p>
-            
+<head>
+    <title>Narrative</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h3>What is this Narrative About?</h3>
+        <p>
+            My topic is on the anthropology series Precure, otherwise known as Pretty Cure. This series has been running for the past twenty-one years and has often been described as the love child between Sailor Moon and Super Sentai. This is a data analysis of its toy sales over the span of 18 years. The analysis was conducted to determine which season is the best, as Toei Animation declares the success of a season based on its toy sales. Cross-referencing this with Japan's GDP and Bandai Namco's total company sales provides deeper insights. The majority of my data came from Bandai Namco's financial reports and weekly financial reports broadcasted in Japan for stockholders.
+        </p>
+        <h4>Video Demonstrations</h4>
+        <p>
+            Below are two transformations from the show itself:
+        </p>
+        <ul>
+            <li>Cure Flora from <em>Go! Princess Precure</em></li>
+            <li>Cure Nynammy from <em>Wonderful Precure</em></li>
+        </ul>
+        <div class="ratio ratio-16x9 mb-3">
+            <iframe 
+                src="https://www.youtube.com/embed/FoGZC5NkULQ" 
+                title="Cure Flora Transformation"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
         </div>
-        
-    </body>
+        <div class="ratio ratio-16x9">
+            <iframe 
+                src="https://www.youtube.com/embed/0NOK2JZ5pdQ" 
+                title="Cure Nynammy Transformation"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

@@ -14,7 +14,7 @@
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="Styles.css?v=1.0">
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -112,21 +112,23 @@
         // Load Graph Descriptions from GraphDescriptions file
         document.addEventListener('DOMContentLoaded', () => {
             fetch('GraphDescriptions.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json(); // Expecting JSON content
-                })
-                .then(data => {
-                    // Set descriptions dynamically
-                    document.getElementById('interactiveDescription').innerHTML = `<p>${data.interactive}</p>`;
-                    document.getElementById('dropdownDescription').innerHTML = `<p>${data.dropdown}</p>`;
-                    document.getElementById('seasonDescription').innerHTML = `<p>${data.season}</p>`;
-                })
-                .catch(err => {
-                    console.error('Failed to load graph descriptions:', err);
-                });
+    .then(response => {
+        console.log('Fetching GraphDescriptions.json:', response);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Loaded GraphDescriptions.json:', data);
+        document.getElementById('interactiveDescription').innerHTML = `<p>${data.interactive}</p>`;
+        document.getElementById('dropdownDescription').innerHTML = `<p>${data.dropdown}</p>`;
+        document.getElementById('seasonDescription').innerHTML = `<p>${data.season}</p>`;
+    })
+    .catch(err => {
+        console.error('Failed to load graph descriptions:', err);
+    });
+
         });
     </script>
 </body>
