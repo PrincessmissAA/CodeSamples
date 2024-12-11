@@ -6,7 +6,7 @@
     <title>ICA11</title>
     <!-- External Libraries -->
     <script src="https://unpkg.com/react@18.2.0/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.2/d3.min.js"></script>
     <!-- Bootstrap CSS -->
@@ -41,27 +41,35 @@
     <div class="container mt-4">
         <!-- Scatter Plot Page -->
         <div id="scatter-plot" class="page active">
-            <h2 class="text-center">Interactive Scatter Plot</h2>
+            <h2 class="text-center">Scatter Plot Visualizations</h2>
             <!-- Interactive Scatter Plot -->
             <div>
-                <h3 class="text-center">Interactive Visualization</h3>
+                <h3 class="text-center">Interactive Scatter Plot</h3>
                 <select id="selectButtonInteractive" class="form-select mb-3"></select>
                 <div id="my_dataviz_Interactive"></div>
                 <script type="text/javascript" src="InteractiveScatterPlot.js"></script>
             </div>
             <!-- Dropdown Scatter Plot -->
             <div>
-                <h3 class="text-center">Dropdown Visualization</h3>
+                <h3 class="text-center">Dropdown Scatter Plot</h3>
                 <select id="selectButtonDropdown" class="form-select mb-3"></select>
                 <div id="my_dataviz_DropDown"></div>
                 <script type="text/javascript" src="DropDownScatterPlot.js"></script>
-            </div>            
+            </div>
+            <!-- Dropdown Visualization Per Season -->
+            <div>
+                <h4 class="text-center">Scatter Plot Per Season</h4>
+                <select id="selectButtonDropdownSeason" class="form-select mb-3"></select>
+                <div id="my_dataviz_Season"></div>
+                <script type="text/javascript" src="ScatterPlotPerSeason.js"></script>
+            </div>
         </div>
-        
 
         <!-- React Data Table Page -->
         <div id="react-table" class="page">
-            <h2 class="text-center">React Data Table</h2>
+            <h2 class="text-center">Narrative</h2>
+            <div id="narrative-text" class="mb-4"></div>
+            <h3 class="text-center">React Data Table</h3>
             <div id="react-data-table" class="table-responsive"></div>
             <script type="text/babel" src="ReactJSDataTable11.js"></script>
         </div>
@@ -75,6 +83,31 @@
             // Show the selected page
             document.getElementById(pageId).classList.add('active');
         }
-    </script>
+
+        // Load the narrative text from Narrative.html into the React Data Table page
+    // Load the narrative text from Narrative.html into the React Data Table page
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('Narrative.html')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                // Extract the content within the <body> tag
+                const narrativeContent = doc.body.innerHTML;
+                document.getElementById('narrative-text').innerHTML = narrativeContent;
+            })
+            .catch(err => {
+                console.error('Failed to load narrative:', err);
+                document.getElementById('narrative-text').innerHTML = `
+                    <p class="text-danger">Failed to load the narrative. Please try again later.</p>`;
+            });
+    });
+</script>
+
 </body>
 </html>

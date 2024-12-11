@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>            
+        <title></title>
+        <script>
+            // Load the narrative text from Narrative.html into the React Data Table page
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('Narrative.html')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        // Insert the fetched HTML content directly into the #narrative-text div
+                        document.getElementById('narrative-text').innerHTML = data;
+                    })
+                    .catch(err => {
+                        console.error('Failed to load narrative:', err);
+                        document.getElementById('narrative-text').innerHTML = `
+                            <p class="text-danger">Failed to load the narrative. Please try again later.</p>`;
+                    });
+            });
+        </script>
+        
+    </head>
+    <body>
+        <div>
+            <h3>What is this Narrative About?</h3>
+            <p>
+                My topic is on the anthropology series Precure otherwise known as Pretty Cure. This series has been running for the past twenty one years, and has been often described as the love child between Sailor Moon and Super Sentai. This is a data analysis of its toy sales over the span of 18 of its years. This comparison was done to truly see which season is the best since that Toei Animation declares the success of a season based off of its toy sales. This cross compared to Japan GPDm, and Bandai Namicos total company sales should give us our answer. I got the majority of my data from Bandai Namicos financial report. This was cross compared to the weekly financial report that is broadcasted in Japan for Japanese stock holders.
+            </p>
+            
+        </div>
+        
+    </body>
+</html>
