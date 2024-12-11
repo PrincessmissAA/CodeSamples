@@ -117,3 +117,4 @@
         update(allGroup[0]);
     });
 })();
+//I had some help from AI to get the graph appended to my page

@@ -154,3 +154,4 @@ document.addEventListener("DOMContentLoaded", function () {
             tooltip.style("visibility", "hidden");
         });
 });
+//I had some help from AI to get the graph appended to my page
