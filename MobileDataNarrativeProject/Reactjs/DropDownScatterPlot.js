@@ -4,8 +4,8 @@ const margin = { top: 10, right: 30, bottom: 120, left: 80 },
 
 // Append the SVG object to the #my_dataviz container
 document.addEventListener("DOMContentLoaded", function () {
-  d3.select("#my_dataviz").selectAll("*").remove();
-  const svg = d3.select("#my_dataviz")
+  d3.select("#my_dataviz_DropDown").selectAll("*").remove();
+  const svg = d3.select("#my_dataviz_DropDown")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)

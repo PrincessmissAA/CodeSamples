@@ -1,73 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ICA11</title>
-    <!-- React and Babel -->
+    <!-- External Libraries -->
     <script src="https://unpkg.com/react@18.2.0/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- D3.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.2/d3.min.js"></script>
-    <!-- Styles -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
-        nav a {
-            float: left;
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        .container {
-            padding: 20px;
-        }
-        .page {
-            display: none;
-        }
-        .active {
-            display: block;
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="Styles.css">
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav>
-        <a href="#" onclick="showPage('scatter-plot')">Scatter Plot</a>
-        <a href="#" onclick="showPage('react-table')">React Data Table</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">ICA11</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showPage('scatter-plot')">Scatter Plot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('react-table')">React Data Table</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
     <!-- Content -->
-    <div class="container">
+    <div class="container mt-4">
         <!-- Scatter Plot Page -->
-        <div id="scatter-plot" class="page">
-            <h2>Interactive Scatter Plot</h2>
-            <select id="selectButton"></select>
-            <div id="my_dataviz"></div>
-            <script type="text/javascript" src="DropDownScatterPlot.js"></script>
+        <div id="scatter-plot" class="page active">
+            <h2 class="text-center">Interactive Scatter Plot</h2>
+            <!-- Interactive Scatter Plot -->
+            <div>
+                <h3 class="text-center">Interactive Visualization</h3>
+                <select id="selectButtonInteractive" class="form-select mb-3"></select>
+                <div id="my_dataviz_Interactive"></div>
+                <script type="text/javascript" src="InteractiveScatterPlot.js"></script>
+            </div>
+            <!-- Dropdown Scatter Plot -->
+            <div>
+                <h3 class="text-center">Dropdown Visualization</h3>
+                <select id="selectButtonDropdown" class="form-select mb-3"></select>
+                <div id="my_dataviz_DropDown"></div>
+                <script type="text/javascript" src="DropDownScatterPlot.js"></script>
+            </div>
         </div>
+        
 
         <!-- React Data Table Page -->
-        <div id="react-table" class="page active">
-            <h2>React Data Table</h2>
-            <div id="react-data-table"></div>
+        <div id="react-table" class="page">
+            <h2 class="text-center">React Data Table</h2>
+            <div id="react-data-table" class="table-responsive"></div>
             <script type="text/babel" src="ReactJSDataTable11.js"></script>
         </div>
-
     </div>
 
     <!-- Script for Navigation -->
