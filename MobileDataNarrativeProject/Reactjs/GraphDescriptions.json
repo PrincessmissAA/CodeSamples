@@ -1,5 +1,5 @@
 {
-    "interactive": "This scatter plot compares the quarter four value to the company profit and the GPD",
-    "dropdown": "This scatter plot analyzes the trends between all seasons and their repective quarters.",
-    "season": "This scatter plot looks at each season's values individually"
+    "interactive": "This scatter plot compares the quarter four value to the company profit and the GPD. How well each season does does not seem to change the outcome of the total company profit.",
+    "dropdown": "This scatter plot analyzes the trends between all seasons and their repective quarters. The drop between Happiness Charge and Kirakira seem to be stangnant.",
+    "season": "This scatter plot looks at each season's values individually. The trends overall typically stay the same."
 }
