@@ -61,4 +61,23 @@
             text-decoration: none;
             padding: 10px 20px; 
         }
+
+        /* Got this from https://ivan-lim.com/css-shimmer-animation-effect */
+        @keyframes shimmer {
+            0% {
+                stroke-dasharray: 1, 10;
+                stroke-dashoffset: 0;
+            }
+            100% {
+                stroke-dasharray: 30, 1;
+                stroke-dashoffset: -20;
+            }
+        }
+        
+        .shimmer {
+            animation: shimmer 2s linear infinite;
+            stroke: rgba(255, 0, 183, 0.442);
+            stroke-width: 2;
+        }
+        
         
