@@ -27,10 +27,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#" onclick="showPage('scatter-plot')">Scatter Plot</a>
+                        <a class="nav-link" href="#" onclick="showPage('scatter-plot')">Scatter Plot</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showPage('react-table')">React Data Table</a>
+                        <a class="nav-link active" href="#" onclick="showPage('react-table')">React Data Table</a>
                     </li>
                 </ul>
             </div>
@@ -40,13 +40,14 @@
     <!-- Content -->
     <div class="container mt-4">
         <!-- Scatter Plot Page -->
-        <div id="scatter-plot" class="page active">
+        <div id="scatter-plot" class="page">
             <h2 class="text-center">Scatter Plot Visualizations</h2>
             <!-- Interactive Scatter Plot -->
             <div>
                 <h3 class="text-center">Interactive Scatter Plot</h3>
                 <select id="selectButtonInteractive" class="form-select mb-3"></select>
                 <div id="my_dataviz_Interactive"></div>
+                <div id="interactiveDescription" class="mt-3"></div>
                 <script type="text/javascript" src="InteractiveScatterPlot.js"></script>
             </div>
             <!-- Dropdown Scatter Plot -->
@@ -54,6 +55,7 @@
                 <h3 class="text-center">Dropdown Scatter Plot</h3>
                 <select id="selectButtonDropdown" class="form-select mb-3"></select>
                 <div id="my_dataviz_DropDown"></div>
+                <div id="dropdownDescription" class="mt-3"></div>
                 <script type="text/javascript" src="DropDownScatterPlot.js"></script>
             </div>
             <!-- Dropdown Visualization Per Season -->
@@ -61,12 +63,13 @@
                 <h4 class="text-center">Scatter Plot Per Season</h4>
                 <select id="selectButtonDropdownSeason" class="form-select mb-3"></select>
                 <div id="my_dataviz_Season"></div>
+                <div id="seasonDescription" class="mt-3"></div>
                 <script type="text/javascript" src="ScatterPlotPerSeason.js"></script>
             </div>
         </div>
 
         <!-- React Data Table Page -->
-        <div id="react-table" class="page">
+        <div id="react-table" class="page active">
             <h2 class="text-center">Narrative</h2>
             <div id="narrative-text" class="mb-4"></div>
             <h3 class="text-center">React Data Table</h3>
@@ -85,29 +88,46 @@
         }
 
         // Load the narrative text from Narrative.html into the React Data Table page
-    // Load the narrative text from Narrative.html into the React Data Table page
-    document.addEventListener('DOMContentLoaded', () => {
-        fetch('Narrative.html')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text();
-            })
-            .then(data => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(data, 'text/html');
-                // Extract the content within the <body> tag
-                const narrativeContent = doc.body.innerHTML;
-                document.getElementById('narrative-text').innerHTML = narrativeContent;
-            })
-            .catch(err => {
-                console.error('Failed to load narrative:', err);
-                document.getElementById('narrative-text').innerHTML = `
-                    <p class="text-danger">Failed to load the narrative. Please try again later.</p>`;
-            });
-    });
-</script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('Narrative.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(data, 'text/html');
+                    const narrativeContent = doc.body.innerHTML;
+                    document.getElementById('narrative-text').innerHTML = narrativeContent;
+                })
+                .catch(err => {
+                    console.error('Failed to load narrative:', err);
+                    document.getElementById('narrative-text').innerHTML = `
+                        <p class="text-danger">Failed to load the narrative. Please try again later.</p>`;
+                });
+        });
 
+        // Load Graph Descriptions from GraphDescriptions file
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('GraphDescriptions.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // Expecting JSON content
+                })
+                .then(data => {
+                    // Set descriptions dynamically
+                    document.getElementById('interactiveDescription').innerHTML = `<p>${data.interactive}</p>`;
+                    document.getElementById('dropdownDescription').innerHTML = `<p>${data.dropdown}</p>`;
+                    document.getElementById('seasonDescription').innerHTML = `<p>${data.season}</p>`;
+                })
+                .catch(err => {
+                    console.error('Failed to load graph descriptions:', err);
+                });
+        });
+    </script>
 </body>
 </html>
