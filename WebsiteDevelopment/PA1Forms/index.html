@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Precure Personnality</title>
+    <link rel='stylesheet' href='style.css'>
+</head>
+
+<body>
+    <h1>Precure character Personnality</h1>
+
+    <hr />
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Personnality Type</label>
+
+        </div>
+        <div class='col-10'>
+
+            <label for="Personnality">Choose a personality type</label>
+            <select id="Personnality" name="Personnality">
+                <option value="Energetic">Energetic</option>
+                <option value="Smart">Smart</option>
+                <option value="Outgoing">Outgoing</option>
+                <option value="Cool">Cool</option>
+                <option value="Fiery">Fiery</option>
+            </select>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Theme</label>
+
+        </div>
+        <div class='col-10'>
+            <form>
+                <label for="Theme">Theme:</label><br>
+                <input type="text" id="Theme" name="Theme" value=""><br>
+                <label for="STheme">Sub Theme:</label><br>
+                <input type="text" id="STheme" name="STheme" value=""><br><br>
+            </form>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Picture Upload</label>
+
+        </div>
+        <div class='col-10'>
+
+            <label for="PictureUpload">Picture Upload</label>
+            <form>
+                <label for="myCard">Select a file:</label>
+                <input type="file" id="PrecurePhoto" name="PrecurePhoto">
+            </form>
+        </div>
+    </div>
+    <!-- I used ChatGPT for the hairstyle and number of teammates form elements -->
+    <div class='row'>
+        <div class='col-2'>
+            <label>Hairstyle</label>
+        </div>
+        <div class='col-10'>
+            <form>
+                <label><input type="radio" name="hairstyle" value="Short"> Short</label>
+                <label><input type="radio" name="hairstyle" value="Medium"> Medium</label>
+                <label><input type="radio" name="hairstyle" value="Long"> Long</label>
+            </form>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Number of Teammates</label>
+        </div>
+        <div class='col-10'>
+            <form>
+                <label for="numTeammates">Enter number of teammates:</label>
+                <input type="number" id="numTeammates" name="numTeammates" min="1" max="10">
+            </form>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-12'>
+            <button id='submit'>Submit</button>
+        </div>
+    </div>
+
+    <hr />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector("form");
+            const submitButton = document.getElementById("submit");
+
+            submitButton.addEventListener("click", (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                const formData = new FormData(form);
+
+                fetch("http://localhost:3000/submit", {
+                    method: "POST",
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert("🎀 Success! Your form has been submitted. 🎀");
+                        console.log("Server Response:", data);
+                    })
+                    .catch(error => {
+                        alert("🎀 Oops! Something went wrong. 🎀");
+                        console.error("Error:", error);
+                    });
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

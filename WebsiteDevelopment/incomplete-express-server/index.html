@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>GIMM 285 Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>GIMM 285 Form</h1>
+
+    <hr />
+    <div class="container">
+        <div class='row mb-3'>
+            <div class='col-md-4' id="name">
+                <b>What is your name?</b>
+            </div>
+            <div class='col-md-8'>
+                <input type="text" />
+            </div>
+        </div>
+
+        <div class='row mb-3'>
+            <div class='col-md-4' id="height">
+                <b>What is your height?</b>
+            </div>
+            <div class='col-md-8'>
+                <input type="text" />
+            </div>
+        </div>
+
+        <div class='row mb-3'>
+            <div class='col-md-4'id="creditCard">
+                <b>What is your credit card number?</b>
+            </div>
+            <div class='col-md-8'>
+                <input type="text" />
+            </div>
+        </div>
+
+        <div class='row mb-3'>
+            <div class='col-md-4' id="answer">
+                <b>What is your answer: Yes or No?</b>
+            </div>
+            <div class='col-md-8'>
+                <select>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                
+            </div>
+        </div>
+
+        <div class='row mb-3'>
+            <div class='col-md-4'>
+                <b>Random File Upload</b>
+            </div>
+            <div class='col-md-8'>
+                <input type="file">
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-12'>
+                <button id='submit'>Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <script>
+        
+        document.getElementById('submit').addEventListener('click', function() {
+            const formData = new FormData();    
+            formData.append('name', document.getElementById('name').value);
+            formData.append('height', document.getElementById('height').value);
+            formData.append('creditCard', document.getElementById('creditCard').value);
+            formData.append('answer', document.getElementById('answer').value);
+
+            //const fileInput = document.getElementById('fileUpload').files[0];
+            formData.append(document.getElementById('fileUpload').files[0]);
+
+            try {
+                const response = fetch ('http://localhost', {
+                    method: 'POST',
+                    body: formData,
+                });
+                console.log(response);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            })
+    </script>
+    //Zach Rojas, Haven Fricke, Avy
+</body>
+
+
+</html>

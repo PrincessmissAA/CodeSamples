@@ -1,0 +1,49 @@
+/* Cute and stylish CSS I used ChatGPT to make the modifications below */
+body {
+    background-color: #ffebf0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #ff66b2;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-shadow: 2px 2px #ff99cc;
+}
+
+button {
+    background-color: #ff66b2;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #ff3385;
+}
+
+input, select {
+    border: 2px solid #ff66b2;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 1em;
+}
+
+label {
+    font-weight: bold;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    body {
+        font-size: 1em;
+    }
+}
