@@ -5,7 +5,7 @@ const multer  = require('multer');
 //Setup defaults for script
 const app = express();
 const upload = multer({ dest: 'uploads/' });
-const port = 80 //Default port to http server
+const port = 3000 //Default port to http server
 
 //The * in app.* needs to match the method type of the request
 app.post(
