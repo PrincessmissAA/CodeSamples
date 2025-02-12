@@ -6,6 +6,7 @@ let connection = null;
 async function query(sql, params) {
     //Singleton DB connection
     if (null === connection) {
+        //Stop, Let's make the database connection
         connection = await mysql.createConnection({
             host: "student-databases.cvode4s4cwrc.us-west-2.rds.amazonaws.com",
             user: "in_class_activity",
@@ -13,6 +14,7 @@ async function query(sql, params) {
             database: 'in_class_activity'
         });
     }
+    //Stop run the database code first
     const [results,] = await connection.execute(sql, params);
     return results;
 }

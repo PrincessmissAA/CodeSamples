@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const multer = require('multer');
 const { check, checkSchema, validationResult } = require('express-validator');
+const Precure = require('./Model/Precure');
 
 //Setup defaults for script
 const app = express();
@@ -30,6 +31,27 @@ const upload = multer({
 const port = 80 //Default port to http server
 
 //The * in app.* needs to match the method type of the request
+
+app.get(
+    '/Precure/',
+    upload.none(),
+    async (request, response) => {
+        let result = {};
+        //try the first block of code, run the second block of code if it fails
+        try {
+            //stop, get results from the database
+            result = await course.getAll(request.query);
+        } catch (error) {
+            //server error
+            return response
+                .status(500) //Error code
+                .json({ message: 'Something went wrong with the server.' });
+
+        }
+        //Default response object
+        response.json({ 'data': result });
+    });
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
