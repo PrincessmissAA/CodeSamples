@@ -40,7 +40,7 @@ app.get(
         //try the first block of code, run the second block of code if it fails
         try {
             //stop, get results from the database
-            result = await course.getAll(request.query);
+            result = await Precure.getAll(request.query);
         } catch (error) {
             //server error
             return response
