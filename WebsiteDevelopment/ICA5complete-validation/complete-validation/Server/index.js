@@ -30,42 +30,6 @@ const upload = multer({
 const port = 80 //Default port to http server
 
 //The * in app.* needs to match the method type of the request
-app.post(
-    '/',
-    //Should be the name of the 'file' field in the request
-    upload.fields([{ name: 'file', maxCount: 1 }]),
-    //Validation for 'name' field in request
-    check('name', 'Please enter your name.').isLength({ min: 3 }),
-    //Validation for 'choice' field in request
-    check('choice', "Please select either the 'Yes' or 'No' option.")
-        .isIn(['Yes', 'No']),
-    //Validation for 'file' field in request
-    checkSchema({
-        'file': {
-            custom: {
-                options: (value, { req, path }) => !!req.files[path],
-                errorMessage: 'Please upload an image file.',
-            },
-        },
-    }),
-    (request, response) => {
-        //Validate request; If there any errors, send 400 response back
-        const errors = validationResult(request)
-        if (!errors.isEmpty()) {
-            return response
-                .status(400)
-                .setHeader('Access-Control-Allow-Origin', '*') //Prevent CORS error
-                .json({
-                    message: 'Request fields or files are invalid.',
-                    errors: errors.array(),
-                });
-        }
-
-        //Default response object
-        response
-            .setHeader('Access-Control-Allow-Origin', '*') //Prevent CORS error
-            .json({ message: 'Request fields and files are valid.' });
-    });
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
