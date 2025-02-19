@@ -53,11 +53,28 @@ app.get(
         response.json({ 'data': result });
     });
 
-    //app.post();
+app.post(
+    upload.none(),
+    async (request, response) => {
+        let result = {};
+        //try the first block of code, run the second block of code if it fails
+        try {
+            //stop, get results from the database
+            result = await Precure.insert(request.query);
+        } catch (error) {
+            //server error
+            return response
+                .status(500) //Error code
+                .json({ message: '🎀 Something went wrong with the server. 🎀 ' });
 
-    //app.delete();
+        }
+        //Default response object
+        response.json({ 'data': result });
+    });
 
-    //app.put();
+//app.delete();
+
+//app.put();
 
 
 app.listen(port, () => {

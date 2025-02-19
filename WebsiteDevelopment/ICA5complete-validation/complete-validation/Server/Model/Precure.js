@@ -10,6 +10,13 @@ async function getAll(parameters = {}) {
     return await connection.query(selectSql, queryParameters);
 }
 
+async function insert(parameters = {}) {
+    //MySQL database query
+    let insertSql = ``,
+        queryParameters = [];
+    //stop, run the database query then return the results
+    return await connection.query(insertSql, queryParameters);
+}
 
 module.exports = {
     getAll
