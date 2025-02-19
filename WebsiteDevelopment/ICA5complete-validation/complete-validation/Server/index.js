@@ -33,6 +33,7 @@ const port = 80 //Default port to http server
 //The * in app.* needs to match the method type of the request
 
 app.get(
+    //Path of the Http request
     '/Precure/',
     upload.none(),
     async (request, response) => {
@@ -45,12 +46,18 @@ app.get(
             //server error
             return response
                 .status(500) //Error code
-                .json({ message: 'Something went wrong with the server.' });
+                .json({ message: '🎀 Something went wrong with the server. 🎀 ' });
 
         }
         //Default response object
         response.json({ 'data': result });
     });
+
+    //app.post();
+
+    //app.delete();
+
+    //app.put();
 
 
 app.listen(port, () => {

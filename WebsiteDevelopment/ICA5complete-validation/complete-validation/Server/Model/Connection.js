@@ -1,3 +1,5 @@
+//library for connecting to MySQL database
+//To install, run the following on cmd: npm install mysql2
 const mysql = require('mysql2/promise');
 
 let connection = null;
@@ -19,6 +21,7 @@ async function query(sql, params) {
     return results;
 }
 
+//files outside of this file can access the query function
 module.exports = {
     query
 }

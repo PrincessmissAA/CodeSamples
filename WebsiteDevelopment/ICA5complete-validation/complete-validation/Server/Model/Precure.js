@@ -1,3 +1,4 @@
+//including the connection.js file
 const connection = require('./Connection');
 
 //gives access to await which alows promise
