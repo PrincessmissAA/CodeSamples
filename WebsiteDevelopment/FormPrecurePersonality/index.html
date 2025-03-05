@@ -88,9 +88,12 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const submitButton = document.getElementById("submit");
+            const errorContainer = document.createElement("div"); // Cute error container
+            errorContainer.id = "errorContainer";
+            document.body.insertBefore(errorContainer, document.body.firstChild);
 
             submitButton.addEventListener("click", (event) => {
-                event.preventDefault(); // Prevent default button behavior
+                event.preventDefault(); // Stop default behavior
 
                 const formData = new FormData();
                 formData.append("Personality", document.getElementById("Personality").value);
@@ -107,21 +110,39 @@
                     }
                 }
 
-                fetch("http://localhost:3000/submit", {
+                fetch("http://localhost:3000/", {
                     method: "POST",
                     body: formData,
                 })
                     .then(response => response.json())
                     .then(data => {
-                        alert("🎀 Success! Your form has been submitted. 🎀");
-                        console.log("Server Response:", data);
+                        if (data.errors) {
+                            showErrors(data.errors); // Show errors in pink banner
+                        } else {
+                            alert("🌟 Yay! Submission successful! 🌟");
+                            console.log("Server Response:", data);
+                            errorContainer.innerHTML = ""; // Clear errors if success
+                        }
                     })
                     .catch(error => {
                         alert("🎀 Oops! Something went wrong. 🎀");
                         console.error("Error:", error);
                     });
             });
+
+            function showErrors(errors) {
+                errorContainer.innerHTML = "";
+                errorContainer.style.display = "block";
+
+                errors.forEach(error => {
+                    let errorMessage = document.createElement("p");
+                    errorMessage.innerText = error;
+                    errorMessage.classList.add("errorMessage");
+                    errorContainer.appendChild(errorMessage);
+                });
+            }
         });
+
     </script>
 
 </body>
