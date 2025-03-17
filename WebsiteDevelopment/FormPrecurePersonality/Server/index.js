@@ -44,6 +44,7 @@ app.post(
         check('STheme', 'Sub Theme cannot be empty.').notEmpty(),
         check('numTeammates', 'Number of teammates must be at least 1.').isInt({ min: 1 }),
         check('hairstyle', 'Please select a hairstyle.').isIn(['Short', 'Medium', 'Long']),
+        check('colorPicker', 'Please select a color.').notEmpty(),
     ],
     (req, res) => {
         const errors = validationResult(req);

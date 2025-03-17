@@ -55,7 +55,7 @@
             <input type="file" id="PrecurePhoto" name="PrecurePhoto">
         </div>
     </div>
-    <!-- I used ChatGPT for the hairstyle and number of teammates form elements -->
+    <!-- I used ChatGPT for the hairstyle, number of teammates, color picker form elements -->
     <div class='row'>
         <div class='col-2'>
             <label>Hairstyle</label>
@@ -76,6 +76,16 @@
             <input type="number" id="numTeammates" name="numTeammates" min="1" max="10">
         </div>
     </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label for="colorPicker">Pick Your Precure Color:</label>
+        </div>
+        <div class='col-10'>
+            <input type="color" id="colorPicker" name="colorPicker" value="#ff66b2">
+        </div>
+    </div>
+    
 
     <div class='row'>
         <div class='col-12'>
@@ -101,6 +111,7 @@
                 formData.append("STheme", document.getElementById("STheme").value);
                 formData.append("PrecurePhoto", document.getElementById("PrecurePhoto").files[0]);
                 formData.append("numTeammates", document.getElementById("numTeammates").value);
+                formData.append("colorPicker", document.getElementById("colorPicker").value);
 
                 const hairstyleElements = document.getElementsByName("hairstyle");
                 for (let i = 0; i < hairstyleElements.length; i++) {
