@@ -1,56 +1,66 @@
-// Cute Precure Server 🌸
+//This is the edited complete validation expres code, with some ChatGPT code
+// Libraries
+const path = require('path');
 const express = require('express');
 const multer = require('multer');
-const path = require('path');
+const { check, checkSchema, validationResult } = require('express-validator');
 
 const app = express();
-const port = 3000;
+const port = 3000; // Change to 3000 to avoid permission issues with port 80
 
-// Set up multer for file upload, renaming files
+//Serve static files from "public" folder (Make sure your index.html, style.css, and index.js are inside "public")
+app.use(express.static('public'));
+
+//Route to serve the HTML form
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// File upload storage configuration
 const storage = multer.diskStorage({
-    destination: 'uploads/',
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + path.extname(file.originalname)); // Renames the file
+    destination: function (req, file, callback) {
+        callback(null, 'uploads/'); // Store files in "uploads/" folder
+    },
+    filename: function (req, file, callback) {
+        callback(null, path.parse(file.originalname).name + '-' + Date.now() + path.parse(file.originalname).ext);
     }
 });
 
 const upload = multer({
     storage: storage,
-    fileFilter: (req, file, cb) => {
-        if (!file.mimetype.startsWith('image/')) {
-            return cb(new Error('Only image files are allowed!'));
+    fileFilter: (req, file, callback) => {
+        const allowedFileMimeTypes = ["image/png", "image/jpg", "image/jpeg"];
+        callback(null, allowedFileMimeTypes.includes(file.mimetype));
+    }
+});
+
+//Form submission route
+app.post(
+    '/',
+    upload.single('PrecurePhoto'),
+    [
+        check('Personality', 'Please select a personality type.').notEmpty(),
+        check('Theme', 'Theme is required.').notEmpty(),
+        check('STheme', 'Sub Theme cannot be empty.').notEmpty(),
+        check('numTeammates', 'Number of teammates must be at least 1.').isInt({ min: 1 }),
+        check('hairstyle', 'Please select a hairstyle.').isIn(['Short', 'Medium', 'Long']),
+    ],
+    (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.error("Validation Errors:", errors.array());
+            return res.status(400).json({
+                message: 'Request fields or files are invalid.',
+                errors: errors.array(),
+            });
         }
-        cb(null, true);
+
+        res.json({ message: '✅ Form submitted successfully!', fileName: req.file.filename });
     }
-});
+);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.post('/', upload.single('PrecurePhoto'), (req, res) => {
-    let errors = [];
-
-    // Validation for 6+ values
-    if (!req.body.Personality) errors.push("Please select a personality! 🎀");
-    if (!req.body.Theme) errors.push("Theme is required! 🌸");
-    if (!req.body.STheme) errors.push("Sub Theme cannot be empty! 💖");
-    if (!req.file) errors.push("Please upload a cute Precure photo! 📸");
-    if (!req.body.numTeammates || req.body.numTeammates < 1) errors.push("At least one teammate is needed! 🏆");
-    
-    const validHairstyles = ["Short", "Medium", "Long"];
-    if (!validHairstyles.includes(req.body.hairstyle)) errors.push("Invalid hairstyle selection! ✂️");
-
-    if (errors.length > 0) {
-        return res.status(400).json({ errors });
-    }
-
-    res.json({
-        message: "Yay! Submission successful! 🎉",
-        fileName: req.file.filename
-    });
-});
-
+// 🌟 Start server
 app.listen(port, () => {
-    console.log(`🌟 Precure Server is running at http://localhost:${port} 🌟`);
+    console.log(`🌟 Server is running at http://localhost:${port} 🌟`);
 });

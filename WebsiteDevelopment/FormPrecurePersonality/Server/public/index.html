@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Precure Personality</title>
+    <link rel='stylesheet' href='style.css'>
+</head>
+
+<body>
+    <h1>Precure character Personnality</h1>
+
+    <hr />
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Personnality Type</label>
+
+        </div>
+        <div class='col-10'>
+
+            <label for="Personnality">Choose a personality type</label>
+            <select id="Personality" name="Personality">
+                <option value="Energetic">Energetic</option>
+                <option value="Smart">Smart</option>
+                <option value="Outgoing">Outgoing</option>
+                <option value="Cool">Cool</option>
+                <option value="Fiery">Fiery</option>
+            </select>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Theme</label>
+
+        </div>
+        <div class='col-10'>
+            <label for="Theme">Theme:</label><br>
+            <input type="text" id="Theme" name="Theme" value=""><br>
+            <label for="STheme">Sub Theme:</label><br>
+            <input type="text" id="STheme" name="STheme" value=""><br><br>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Picture Upload</label>
+
+        </div>
+        <div class='col-10'>
+
+            <label for="PictureUpload">Picture Upload</label>
+            <label for="myCard">Select a file:</label>
+            <input type="file" id="PrecurePhoto" name="PrecurePhoto">
+        </div>
+    </div>
+    <!-- I used ChatGPT for the hairstyle and number of teammates form elements -->
+    <div class='row'>
+        <div class='col-2'>
+            <label>Hairstyle</label>
+        </div>
+        <div class='col-10'>
+            <label><input type="radio" name="hairstyle" value="Short"> Short</label>
+            <label><input type="radio" name="hairstyle" value="Medium"> Medium</label>
+            <label><input type="radio" name="hairstyle" value="Long"> Long</label>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Number of Teammates</label>
+        </div>
+        <div class='col-10'>
+            <label for="numTeammates">Enter number of teammates:</label>
+            <input type="number" id="numTeammates" name="numTeammates" min="1" max="10">
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-12'>
+            <button id='submit'>Submit</button>
+        </div>
+    </div>
+
+    <hr />
+    <!-- I used chatGPT for the script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const submitButton = document.getElementById("submit");
+            const errorContainer = document.createElement("div"); // Cute error container
+            errorContainer.id = "errorContainer";
+            document.body.insertBefore(errorContainer, document.body.firstChild);
+
+            submitButton.addEventListener("click", (event) => {
+                event.preventDefault(); // Stop default behavior
+
+                const formData = new FormData();
+                formData.append("Personality", document.getElementById("Personality").value);
+                formData.append("Theme", document.getElementById("Theme").value);
+                formData.append("STheme", document.getElementById("STheme").value);
+                formData.append("PrecurePhoto", document.getElementById("PrecurePhoto").files[0]);
+                formData.append("numTeammates", document.getElementById("numTeammates").value);
+
+                const hairstyleElements = document.getElementsByName("hairstyle");
+                for (let i = 0; i < hairstyleElements.length; i++) {
+                    if (hairstyleElements[i].checked) {
+                        formData.append("hairstyle", hairstyleElements[i].value);
+                        break;
+                    }
+                }
+
+                fetch("http://localhost:3000/", {
+                    method: "POST",
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.errors) {
+                            showErrors(data.errors); // Show errors in pink banner
+                        } else {
+                            alert("🌟 Yay! Submission successful! 🌟");
+                            console.log("Server Response:", data);
+                            document.getElementById("errorContainer").innerHTML = ""; // Clear errors if success
+                        }
+                    })
+                    .catch(error => {
+                        alert("🎀 Oops! Something went wrong. 🎀");
+                        console.error("Error:", error);
+                    });
+            });
+
+            function showErrors(errors) {
+                const errorContainer = document.getElementById("errorContainer");
+                errorContainer.innerHTML = ""; // Clear previous errors
+                errorContainer.style.display = "block";
+
+                errors.forEach(error => {
+                    let errorMessage = document.createElement("p");
+                    errorMessage.innerText = error.msg; // ✅ Extracts actual message
+                    errorMessage.classList.add("errorMessage");
+                    errorContainer.appendChild(errorMessage);
+                });
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
