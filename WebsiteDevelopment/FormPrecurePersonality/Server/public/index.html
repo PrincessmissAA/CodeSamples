@@ -11,6 +11,17 @@
     <h1>Precure character Personnality</h1>
 
     <hr />
+    <!-- I used chatGPT for the name form elements -->
+    <div class='row'>
+        <div class='col-2'>
+            <label for="userName">Your Name:</label>
+        </div>
+        <div class='col-10'>
+            <label for="myName">Cure </label>
+            <input type="text" id="userName" name="userName" placeholder="Enter your name" required>
+        </div>
+    </div>
+
 
     <div class='row'>
         <div class='col-2'>
@@ -85,13 +96,32 @@
             <input type="color" id="colorPicker" name="colorPicker" value="#ff66b2">
         </div>
     </div>
-    
+
 
     <div class='row'>
         <div class='col-12'>
             <button id='submit'>Submit</button>
         </div>
     </div>
+
+    <h2>Previous Submissions</h2>
+    <table id="submissionsTable" border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Personality</th>
+                <th>Theme</th>
+                <th>Sub Theme</th>
+                <th>Number of Teammates</th>
+                <th>Hairstyle</th>
+                <th>Color</th>
+                <th>Uploaded File</th>
+            </tr>
+        </thead>
+        <tbody id="submissionsBody">
+        </tbody>
+    </table>
+
 
     <hr />
     <!-- I used chatGPT for the script -->
@@ -106,6 +136,7 @@
                 event.preventDefault(); // Stop default behavior
 
                 const formData = new FormData();
+                formData.append("userName", document.getElementById("userName").value);
                 formData.append("Personality", document.getElementById("Personality").value);
                 formData.append("Theme", document.getElementById("Theme").value);
                 formData.append("STheme", document.getElementById("STheme").value);
@@ -130,7 +161,28 @@
                         if (data.errors) {
                             showErrors(data.errors); // Show errors in pink banner
                         } else {
-                            alert("🌟 Yay! Submission successful! 🌟");
+                            function updateSubmissionsTable(submissions) {
+                                const tableBody = document.getElementById("submissionsBody");
+                                tableBody.innerHTML = ""; // Clear previous entries
+
+                                submissions.forEach(submission => {
+                                    let row = document.createElement("tr");
+
+                                    row.innerHTML = `
+            <td>${submission.userName}</td>
+            <td>${submission.Personality}</td>
+            <td>${submission.Theme}</td>
+            <td>${submission.STheme}</td>
+            <td>${submission.numTeammates}</td>
+            <td>${submission.hairstyle}</td>
+            <td style="background-color:${submission.colorPicker}; width:50px;"></td>
+            <td>${submission.fileName ? `<a href="/uploads/${submission.fileName}" target="_blank">View File</a>` : "No File"}</td>
+        `;
+
+                                    tableBody.appendChild(row);
+                                });
+                            }
+
                             console.log("Server Response:", data);
                             document.getElementById("errorContainer").innerHTML = ""; // Clear errors if success
                         }
@@ -153,6 +205,21 @@
                     errorContainer.appendChild(errorMessage);
                 });
             }
+
+            function fetchSubmissions() {
+                fetch("/submissions")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.submissions) {
+                            updateSubmissionsTable(data.submissions);
+                        }
+                    })
+                    .catch(error => console.error("Error fetching submissions:", error));
+            }
+
+            // Fetch stored submissions when page loads
+            document.addEventListener("DOMContentLoaded", fetchSubmissions);
+
 
         });
 

@@ -4,6 +4,9 @@ const path = require('path');
 const express = require('express');
 const multer = require('multer');
 const { check, checkSchema, validationResult } = require('express-validator');
+// Store successful form submissions
+const submissions = [];
+
 
 const app = express();
 const port = 3000; // Change to 3000 to avoid permission issues with port 80
@@ -39,6 +42,7 @@ app.post(
     '/',
     upload.single('PrecurePhoto'),
     [
+        check('userName', 'Name must be at least 2 characters long.').isLength({ min: 2 }),
         check('Personality', 'Please select a personality type.').notEmpty(),
         check('Theme', 'Theme is required.').notEmpty(),
         check('STheme', 'Sub Theme cannot be empty.').notEmpty(),
@@ -56,9 +60,34 @@ app.post(
             });
         }
 
-        res.json({ message: '✅ Form submitted successfully!', fileName: req.file.filename });
+        // Store the successful submission
+        const newSubmission = {
+            userName: req.body.userName,
+            Personality: req.body.Personality,
+            Theme: req.body.Theme,
+            STheme: req.body.STheme,
+            numTeammates: req.body.numTeammates,
+            hairstyle: req.body.hairstyle,
+            colorPicker: req.body.colorPicker,
+            fileName: req.file ? req.file.filename : null, // Save the uploaded file name if present
+        };
+
+        // Save submission in the array
+        submissions.push(newSubmission);
+
+        // Send response including all stored submissions
+        res.json({
+            message: '✅ Form submitted successfully!',
+            submissions: submissions, // Send all saved submissions
+        });
+
+
     }
 );
+
+app.get('/submissions', (req, res) => {
+    res.json({ submissions });
+});
 
 
 // 🌟 Start server
