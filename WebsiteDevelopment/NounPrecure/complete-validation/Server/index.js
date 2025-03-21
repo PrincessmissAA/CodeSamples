@@ -35,8 +35,12 @@ const port = 80 //Default port to http server
 app.get(
     //Path of the Http request
     '/Precure/',
+    '/Personnality/',
+    '/Theme/',
+    '/SubTheme/',
+    '/Hairstyle/',
     upload.none(),
-    async (request, response) => {
+    async (request, sresponse) => {
         let result = {};
         //try the first block of code, run the second block of code if it fails
         try {
