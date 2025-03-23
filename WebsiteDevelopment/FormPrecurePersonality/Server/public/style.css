@@ -78,3 +78,16 @@ label {
         transform: translateY(0);
     }
 }
+
+#successBanner {
+    background-color: #ccffcc;
+    color: #006600;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}

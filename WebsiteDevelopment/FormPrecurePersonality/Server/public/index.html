@@ -104,6 +104,8 @@
         </div>
     </div>
 
+    <div id="successBanner" style="display:none;"></div>
+
     <h2>Previous Submissions</h2>
     <table id="submissionsTable" border="1">
         <thead>
@@ -160,6 +162,7 @@
                     .then(data => {
                         if (data.errors) {
                             showErrors(data.errors); // Show errors in pink banner
+                            document.getElementById("successBanner").style.display = "none"; // Hide success if error
                         } else {
                             function updateSubmissionsTable(submissions) {
                                 const tableBody = document.getElementById("submissionsBody");
@@ -185,6 +188,12 @@
 
                             console.log("Server Response:", data);
                             document.getElementById("errorContainer").innerHTML = ""; // Clear errors if success
+                            document.getElementById("errorContainer").style.display = "none";
+
+                            // 🎉 Show success banner
+                            const successBanner = document.getElementById("successBanner");
+                            successBanner.innerText = data.message || "Success!";
+                            successBanner.style.display = "block";
                             updateSubmissionsTable(data.submissions);
                         }
                     })
@@ -219,7 +228,7 @@
             }
 
             // Fetch stored submissions when page loads
-            document.addEventListener("DOMContentLoaded", fetchSubmissions);
+            fetchSubmissions();
 
 
         });
