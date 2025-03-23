@@ -1,3 +1,4 @@
+//I used Chatgpt to help make the async functions
 const connection = require('./Connection');
 
 // Get all records
@@ -32,7 +33,7 @@ async function remove(id) {
     return await connection.query(deleteSql, [id]);
 }
 
-// ✅ FIXED: module.exports not "modules.export"
+// FIXED: module.exports not "modules.export"
 module.exports = {
     getAll,
     getById,

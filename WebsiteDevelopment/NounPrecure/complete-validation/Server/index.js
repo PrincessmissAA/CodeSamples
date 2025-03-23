@@ -76,17 +76,17 @@ app.post(
         //Default response object
         response.json({ 'data': result });
     });
+//I used Chatgpt to generate the delete and put methods
+app.delete('/Precure/:id', async (request, response) => {
+    try {
+        const id = request.params.id;
+        const result = await Precure.remove(id);
+        response.json({ data: result });
+    } catch (error) {
+        response.status(500).json({ message: '🎀 Error deleting record 🎀' });
+    }
+});
 
-    app.delete('/Precure/:id', async (request, response) => {
-        try {
-            const id = request.params.id;
-            const result = await Precure.remove(id);
-            response.json({ data: result });
-        } catch (error) {
-            response.status(500).json({ message: '🎀 Error deleting record 🎀' });
-        }
-    });
-    
 
 app.put('/Precure/:id', upload.none(), async (request, response) => {
     try {
