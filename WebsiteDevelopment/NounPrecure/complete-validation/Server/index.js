@@ -35,6 +35,7 @@ const port = 80 //Default port to http server
 app.get(
     //Path of the Http request
     '/Precure/',
+    '/Precure/:id',
     '/Personnality/',
     '/Theme/',
     '/SubTheme/',
@@ -76,9 +77,27 @@ app.post(
         response.json({ 'data': result });
     });
 
-//app.delete();
+    app.delete('/Precure/:id', async (request, response) => {
+        try {
+            const id = request.params.id;
+            const result = await Precure.remove(id);
+            response.json({ data: result });
+        } catch (error) {
+            response.status(500).json({ message: '🎀 Error deleting record 🎀' });
+        }
+    });
+    
 
-//app.put();
+app.put('/Precure/:id', upload.none(), async (request, response) => {
+    try {
+        const id = request.params.id;
+        const result = await Precure.edit(id, request.body);
+        response.json({ data: result });
+    } catch (error) {
+        response.status(500).json({ message: '🎀 Error updating record 🎀' });
+    }
+});
+
 
 
 app.listen(port, () => {
