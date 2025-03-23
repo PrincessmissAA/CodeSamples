@@ -185,6 +185,7 @@
 
                             console.log("Server Response:", data);
                             document.getElementById("errorContainer").innerHTML = ""; // Clear errors if success
+                            updateSubmissionsTable(data.submissions);
                         }
                     })
                     .catch(error => {
