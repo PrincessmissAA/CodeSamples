@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>            
+        <title>GIMM 340 Book Survey</title>
+        <link rel='stylesheet' href='style.css'>
+    </head>
+    <body>
+        <h1>GIMM 340 Book Survey</h1>
+
+        <hr/>
+
+        <div id='results' class='overflow table-responsive'>
+            results go here.
+        </div>
+       
+        <script>
+            const isEmpty = (obj) => Object.keys(obj).length === 0;
+
+            fetch("/survey/", {method: 'GET'})
+                    .then((response) => {
+                        return new Promise((resolve) => response.json()
+                            .then((json) => resolve({
+                                status: response.status,
+                                json,
+                            })
+                        ));
+                    })
+                    .then(({status, json}) => {
+                        if (200 === status) {
+                            let displayTable = '<table>' +
+                            '<thead>' +
+                            '<tr>' +
+                            '<th>ID</th>' +
+                            '<th>Book ID</th>' +
+                            '<th >First Name</th>' +
+                            '<th >Last Name</th>' +
+                            '<th >Why</th>' +
+                            '</tr>' +
+                            '</thead>' +
+                            '<tbody>';
+                        if (typeof json.data !== 'undefined') {
+                            for (row of json.data) {
+                                displayTable += '<tr>' +
+                                    '<td>' + row.id + '</td>' +
+                                    '<td>' + row.book_id + '</td>' +
+                                    '<td>' + row.first_name + '</td>' +
+                                    '<td>' + row.last_name + '</td>' +
+                                    '<td>' + row.why + '</td>' +
+                                    '<td><a href="edit.html?id=' + row.id + '">Edit</a></td>' +
+                                    '</tr>';
+                            }
+                        }
+                        document.getElementById('results').innerHTML = displayTable;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+           
+        </script>
+    </body>
+</html>
