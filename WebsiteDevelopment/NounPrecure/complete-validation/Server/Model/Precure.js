@@ -1,5 +1,5 @@
 //I used Chatgpt to help make the async functions
-const connection = require('./Connection');
+const connection = require('./Model/Connection');
 
 // Get all records
 async function getAll(parameters = {}) {
