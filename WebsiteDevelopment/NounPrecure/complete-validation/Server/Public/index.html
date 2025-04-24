@@ -12,61 +12,121 @@
 </head>
 
 <body>
-    <h1>GIMM 285 Form</h1>
-
-    <div id='invalid-form' class='alert alert-danger'>&nbsp;</div>
+    <h1>Precure character Personnality</h1>
 
     <hr />
-
-    <div class="container">
-        <div class='row mb-3'>
-            <div class='col-md-4'>
-                <b>What is your name?</b>
-            </div>
-            <div class='col-md-8'>
-                <input id='name' type="text">
-            </div>
+    <!-- I used chatGPT for the name form elements -->
+    <div class='row'>
+        <div class='col-2'>
+            <label for="userName">Your Name:</label>
         </div>
-
-        <div class='row mb-3'>
-            <div id='name-error' class='col-12 text-danger'>&nbsp;</div>
-        </div>
-
-        <div class='row mb-3'>
-            <div class='col-md-4'>
-                <b>What is your answer: Yes or No?</b>
-            </div>
-            <div class='col-md-8'>
-                <label for="yes">Yes</label>
-                <input type="radio" name="choice" id="yes" value="Yes">
-                <label for="no">No</label>
-                <input type="radio" name="choice" id="no" value="No">
-            </div>
-        </div>
-
-        <div class='row mb-3'>
-            <div id='choice-error' class='col-12 text-danger'>&nbsp;</div>
-        </div>
-
-        <div class='row mb-3'>
-            <div class='col-md-4'>
-                <b>Random File Upload</b>
-            </div>
-            <div class='col-md-8'>
-                <input type="file" id='file'>
-            </div>
-        </div>
-
-        <div class='row mb-3'>
-            <div id='file-error' class='col-12 text-danger'>&nbsp;</div>
-        </div>
-
-        <div class='row'>
-            <div class='col-md-12'>
-                <button id='submit'>Submit</button>
-            </div>
+        <div class='col-10'>
+            <label for="myName">Cure </label>
+            <input type="text" id="userName" name="userName" placeholder="Enter your name" required>
         </div>
     </div>
+
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Personnality Type</label>
+
+        </div>
+        <div class='col-10'>
+
+            <label for="Personnality">Choose a personality type</label>
+            <select id="Personality" name="Personality">
+                <option value="Energetic">Energetic</option>
+                <option value="Smart">Smart</option>
+                <option value="Outgoing">Outgoing</option>
+                <option value="Cool">Cool</option>
+                <option value="Fiery">Fiery</option>
+            </select>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Theme</label>
+
+        </div>
+        <div class='col-10'>
+            <label for="Theme">Theme:</label><br>
+            <input type="text" id="Theme" name="Theme" value=""><br>
+            <label for="STheme">Sub Theme:</label><br>
+            <input type="text" id="STheme" name="STheme" value=""><br><br>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Picture Upload</label>
+
+        </div>
+        <div class='col-10'>
+
+            <label for="PictureUpload">Picture Upload</label>
+            <label for="myCard">Select a file:</label>
+            <input type="file" id="PrecurePhoto" name="PrecurePhoto">
+        </div>
+    </div>
+    <!-- I used ChatGPT for the hairstyle, number of teammates, color picker form elements -->
+    <div class='row'>
+        <div class='col-2'>
+            <label>Hairstyle</label>
+        </div>
+        <div class='col-10'>
+            <label><input type="radio" name="hairstyle" value="Short"> Short</label>
+            <label><input type="radio" name="hairstyle" value="Medium"> Medium</label>
+            <label><input type="radio" name="hairstyle" value="Long"> Long</label>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label>Number of Teammates</label>
+        </div>
+        <div class='col-10'>
+            <label for="numTeammates">Enter number of teammates:</label>
+            <input type="number" id="numTeammates" name="numTeammates" min="1" max="10">
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-2'>
+            <label for="colorPicker">Pick Your Precure Color:</label>
+        </div>
+        <div class='col-10'>
+            <input type="color" id="colorPicker" name="colorPicker" value="#ff66b2">
+        </div>
+    </div>
+
+
+    <div class='row'>
+        <div class='col-12'>
+            <button id='submit'>Submit</button>
+        </div>
+    </div>
+
+    <div id="successBanner" style="display:none;"></div>
+
+    <h2>Previous Submissions</h2>
+    <table id="submissionsTable" border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Personality</th>
+                <th>Theme</th>
+                <th>Sub Theme</th>
+                <th>Number of Teammates</th>
+                <th>Hairstyle</th>
+                <th>Color</th>
+                <th>Uploaded File</th>
+            </tr>
+        </thead>
+        <tbody id="submissionsBody">
+        </tbody>
+    </table>
 
 
     <hr />
