@@ -6,7 +6,7 @@ async function createTable() {
         CREATE TABLE IF NOT EXISTS precure_survey (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
-            personnality VARCHAR(255) NOT NULL,
+            season VARCHAR(255) NOT NULL,
             theme VARCHAR(255) NOT NULL,
             stheme VARCHAR(255),
             precure_photo VARCHAR(255),
@@ -26,9 +26,9 @@ async function getAll(parameters = {}) {
         selectSql += ` AND name = ?`;
         queryParams.push(parameters.name);
     }
-    if (parameters.personnality) {
-        selectSql += ` AND personnality = ?`;
-        queryParams.push(parameters.personnality);
+    if (parameters.season) {
+        selectSql += ` AND season = ?`;
+        queryParams.push(parameters.season);
     }
     if (parameters.theme) {
         selectSql += ` AND theme = ?`;
@@ -38,6 +38,8 @@ async function getAll(parameters = {}) {
         selectSql += ` AND num_teammates = ?`;
         queryParams.push(parameters.num_teammates);
     }
+
+    selectSql += ` LIMIT 100`;
 
     return await connection.query(selectSql, queryParams);
 }
@@ -56,7 +58,7 @@ async function edit(id, parameters = {}) {
         UPDATE precure_survey 
         SET 
             name = ?, 
-            personnality = ?, 
+            season = ?, 
             theme = ?, 
             stheme = ?, 
             precure_photo = ?, 
@@ -66,7 +68,7 @@ async function edit(id, parameters = {}) {
     `;
     const queryParams = [
         parameters.name,
-        parameters.personnality,
+        parameters.season,
         parameters.theme,
         parameters.stheme,
         parameters.precure_photo,
@@ -88,12 +90,12 @@ async function remove(id) {
 async function insert(parameters = {}) {
     let insertSQL = `
         INSERT INTO precure_survey 
-        (name, personnality, theme, stheme, precure_photo, hairstyle, num_teammates)
+        (name, season, theme, stheme, precure_photo, hairstyle, num_teammates)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
     let queryParameters = [
         parameters.name,      
-        parameters.personnality, 
+        parameters.season, 
         parameters.theme,        
         parameters.stheme,       
         parameters.precure_photo, 
@@ -104,31 +106,39 @@ async function insert(parameters = {}) {
 }
 
 
-async function updateData(id, parameters = {}) {
-    let updateSQL = `
+async function edit(id, parameters = {}) {
+    let updateSql = `
         UPDATE precure_survey 
         SET 
             name = ?, 
-            personnality = ?, 
+            season = ?, 
             theme = ?, 
             stheme = ?, 
-            precure_photo = ?, 
             hairstyle = ?, 
             num_teammates = ?
-        WHERE id = ?
     `;
-    let queryParameters = [
+
+    const queryParams = [
         parameters.name,
-        parameters.personnality,
+        parameters.season,
         parameters.theme,
         parameters.stheme,
-        parameters.precure_photo,
         parameters.hairstyle,
-        parameters.num_teammates,
-        id // <- very important!!
+        parameters.num_teammates
     ];
-    return await connection.query(updateSQL, queryParameters);
+
+    // ✨ Only update precure_photo if provided!
+    if (parameters.precure_photo !== undefined && parameters.precure_photo !== null) {
+        updateSql += `, precure_photo = ? `;
+        queryParams.push(parameters.precure_photo);
+    }
+
+    updateSql += ` WHERE id = ?`;
+    queryParams.push(id);
+
+    return await connection.query(updateSql, queryParams);
 }
+
 
 
 // FIXED: module.exports not "modules.export"
@@ -138,6 +148,6 @@ module.exports = {
     insert,
     edit,
     remove,
-    updateData, 
+    edit, 
     createTable
 };

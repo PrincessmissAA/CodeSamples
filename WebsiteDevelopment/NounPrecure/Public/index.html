@@ -9,11 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <link rel='stylesheet' href='style.css'>
+    <link rel='stylesheet' href='style.css'>
 </head>
 
 <body>
-    <h1>Precure character Personnality</h1>
+    <h1>Precure character Tracker</h1>
     <a href="results.html">results page</a>
     <a href="edit.html">edit page</a>
 
@@ -29,24 +29,41 @@
             <div id="name-error" class="text-danger"></div>
         </div>
     </div>
-    
+
     <div class='row'>
         <div class='col-2'>
-            <label>Personality Type</label>
+            <label>season</label>
         </div>
         <div class='col-10'>
-            <label for="personnality">Choose a personality type</label>
-            <select id="personnality" name="personnality">
-                <option value="Energetic">Energetic</option>
-                <option value="Smart">Smart</option>
-                <option value="Outgoing">Outgoing</option>
-                <option value="Cool">Cool</option>
-                <option value="Fiery">Fiery</option>
+            <label for="season">Choose a season</label>
+            <select id="season" name="season">
+                <option value="futari_wa">futari wa</option>
+                <option value="futari_wa_max_heart">futari wa max heart</option>
+                <option value="splash_star">splash star</option>
+                <option value="yes_precure_5_gogo">yes precure 5 gogo</option>
+                <option value="fresh">fresh</option>
+                <option value="heartcatch">heartcatch</option>
+                <option value="suite">suite</option>
+                <option value="smile">smile</option>
+                <option value="doki_doki">doki doki</option>
+                <option value="happiness_charge">happiness charge</option>
+                <option value="go_princess">go princess</option>
+                <option value="maho_tsukai">maho tsukai</option>
+                <option value="kira_kira">kira kira precure a la mode</option>
+                <option value="hugtto">hugtto</option>
+                <option value="star_twinkle">star twinkle</option>
+                <option value="healin_good">healin' good</option>
+                <option value="tropical_rouge">tropical rouge</option>
+                <option value="delicious_party">delicious party</option>
+                <option value="hero_girl_sky">hero girl sky</option>
+                <option value="wonderful">wonderful</option>
+                <option value="kimi_to_idol">you and idol</option>
+                <option value="movie_specific">movie specific</option>
             </select>
-            <div id="personnality-error" class="text-danger"></div>
+            <div id="season-error" class="text-danger"></div>
         </div>
     </div>
-    
+
     <div class='row'>
         <div class='col-2'>
             <label>Theme</label>
@@ -55,13 +72,13 @@
             <label for="theme">Theme:</label><br>
             <input type="text" id="theme" name="theme" value=""><br>
             <div id="theme-error" class="text-danger"></div>
-    
+
             <label for="stheme">Sub Theme:</label><br>
             <input type="text" id="stheme" name="stheme" value=""><br><br>
             <div id="stheme-error" class="text-danger"></div>
         </div>
     </div>
-    
+
     <div class='row'>
         <div class='col-2'>
             <label>Picture Upload</label>
@@ -72,7 +89,7 @@
             <!-- (no error div needed for file upload in your current validation) -->
         </div>
     </div>
-    
+
     <div class='row'>
         <div class='col-2'>
             <label>Hairstyle</label>
@@ -84,7 +101,7 @@
             <div id="hairstyle-error" class="text-danger"></div>
         </div>
     </div>
-    
+
     <div class='row'>
         <div class='col-2'>
             <label>Number of Teammates</label>
@@ -95,16 +112,17 @@
             <div id="num_teammates-error" class="text-danger"></div>
         </div>
     </div>
-    
+
     <div class='row'>
         <div class='col-12'>
             <button id='submit'>Submit</button>
         </div>
     </div>
-    
-    <div id="successBanner" style="display:none;"></div>
-    <div id="invalid-form" class="text-danger" style="display:none;"></div>
-    
+
+    <div id="successBanner" hidden></div>
+    <div id="invalid-form" class="text-danger" hidden></div>
+
+
     <hr />
 
     <script>
@@ -113,30 +131,30 @@
         const successBanner = document.getElementById('successBanner');
         errorBanner.hidden = true;
         successBanner.hidden = true;
-    
+
         //Click event handler
         document.getElementById('submit').addEventListener('click', () => {
             const fileField = document.querySelector('input[type="file"]');
-    
+
             //Build form data object to send in request to server
             const formData = new FormData();
             formData.append('name', document.getElementById('name').value); // <-- fixed id here
-            formData.append('personnality', document.getElementById('personnality').value);
+            formData.append('season', document.getElementById('season').value);
             formData.append('theme', document.getElementById('theme').value);
             formData.append('stheme', document.getElementById('stheme').value);
-    
+
             const hairstyle = document.querySelector('input[name="hairstyle"]:checked');
             formData.append('hairstyle', hairstyle ? hairstyle.value : '');
-    
+
             formData.append('num_teammates', document.getElementById('num_teammates').value);
             formData.append('precure_photo', fileField.files[0]);
-    
+
             //Settings for FETCH API request
             let fetchSettings = {
                 method: 'POST',
                 body: formData
             };
-    
+
             //Send FETCH API request
             fetch("http://localhost:3000/", fetchSettings)
                 .then((response) => {
@@ -149,37 +167,33 @@
                 })
                 .then(({ status, json }) => {
                     const errorMessages = document.getElementsByClassName('text-danger');
-    
+
                     // Clear previous banners and errors
-                    errorBanner.hidden = true;
-                    successBanner.hidden = true;
+                    errorBanner.style.display = 'none';
+                    successBanner.style.display = 'none';
                     for (htmlElement of errorMessages) {
                         htmlElement.innerHTML = '&nbsp;';
                     }
-    
+
                     if (status === 400) {
-                        errorBanner.innerText = 'Form has errors. Please correct them and resubmit.';
-                        errorBanner.hidden = false;
-                        for (error of json.errors) {
-                            const errorId = error.path + '-error';
-                            const errorElement = document.getElementById(errorId);
-                            if (errorElement) {
-                                errorElement.innerHTML = error.msg;
-                            }
-                        }
+                        errorBanner.innerText = '⚠️ Form has errors. Please correct them and resubmit. ⚠️';
+                        errorBanner.style.display = 'block';
                     } else if (status === 200) {
                         successBanner.innerText = '✨ Form submitted successfully! ✨';
-                        successBanner.className = 'text-success';
-                        successBanner.hidden = false;
+                        successBanner.className = ''; // clear any old classes
+                        successBanner.classList.add('text-success'); // add success text
+                        successBanner.style.display = 'block';
                     }
                 })
+
+
                 .catch(error => {
                     console.error('Error:', error);
                 });
             return;
         });
     </script>
-    
+
 </body>
 
 

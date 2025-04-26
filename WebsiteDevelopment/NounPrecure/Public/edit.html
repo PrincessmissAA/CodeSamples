@@ -23,16 +23,35 @@
 
     <div class='row'>
         <div class='col-2'>
-            <label>Personality Type</label>
+            <label>season</label>
         </div>
         <div class='col-10'>
-            <select id="personnality" name="personnality">
-                <option value="Energetic">Energetic</option>
-                <option value="Smart">Smart</option>
-                <option value="Outgoing">Outgoing</option>
-                <option value="Cool">Cool</option>
-                <option value="Fiery">Fiery</option>
+            <label for="season">Choose a season</label>
+            <select id="season" name="season">
+                <option value="futari_wa">futari wa</option>
+                <option value="futari_wa_max_heart">futari wa max heart</option>
+                <option value="splash_star">splash star</option>
+                <option value="yes_precure_5_gogo">yes precure 5 gogo</option>
+                <option value="fresh">fresh</option>
+                <option value="heartcatch">heartcatch</option>
+                <option value="suite">suite</option>
+                <option value="smile">smile</option>
+                <option value="doki_doki">doki doki</option>
+                <option value="happiness_charge">happiness charge</option>
+                <option value="go_princess">go princess</option>
+                <option value="maho_tsukai">maho tsukai</option>
+                <option value="kira_kira">kira kira precure a la mode</option>
+                <option value="hugtto">hugtto</option>
+                <option value="star_twinkle">star twinkle</option>
+                <option value="healin_good">healin' good</option>
+                <option value="tropical_rouge">tropical rouge</option>
+                <option value="delicious_party">delicious party</option>
+                <option value="hero_girl_sky">hero girl sky</option>
+                <option value="wonderful">wonderful</option>
+                <option value="kimi_to_idol">you and idol</option>
+                <option value="movie_specific">movie specific</option>
             </select>
+            <div id="season-error" class="text-danger"></div>
         </div>
     </div>
 
@@ -75,6 +94,10 @@
         </div>
     </div>
 
+    <div id="successBanner" hidden></div>
+    <div id="invalid-form" class="text-danger" hidden></div>
+
+
     <hr />
 
     <script>
@@ -83,11 +106,11 @@
 
         fetch("/survey/" + searchParams.get('id'), { method: 'GET' })
             .then((response) => response.json())
-            .then(({ status, json }) => {
-                if (200 === status || json.data) {
+            .then((json) => {
+                if (json.data && json.data.length > 0) {
                     let row = json.data[0];
                     document.getElementById('name').value = row.name;
-                    document.getElementById('personnality').value = row.personnality;
+                    document.getElementById('season').value = row.season;
                     document.getElementById('theme').value = row.theme;
                     document.getElementById('stheme').value = row.stheme;
                     document.getElementById('num_teammates').value = row.num_teammates;
@@ -98,37 +121,50 @@
                             break;
                         }
                     }
+                } else {
+                    console.error('No record found! ✨ Maybe the ID is missing or incorrect.');
                 }
             })
-            .catch(error => console.error('Error:', error));
+
 
         document.getElementById('search').addEventListener('click', (event) => {
-            const formData = new FormData();
-
-            formData.append('name', document.getElementById('name').value);
-            formData.append('personnality', document.getElementById('personnality').value);
-            formData.append('theme', document.getElementById('theme').value);
-            formData.append('stheme', document.getElementById('stheme').value);
-            formData.append('num_teammates', document.getElementById('num_teammates').value);
-            const hairstyle = document.querySelector('input[name="hairstyle"]:checked');
-            formData.append('hairstyle', hairstyle ? hairstyle.value : '');
+            const updatedData = {
+                name: document.getElementById('name').value,
+                season: document.getElementById('season').value,
+                theme: document.getElementById('theme').value,
+                stheme: document.getElementById('stheme').value,
+                num_teammates: parseInt(document.getElementById('num_teammates').value),
+                hairstyle: document.querySelector('input[name="hairstyle"]:checked')?.value || '',
+                precure_photo: null // ✨ add this line ✨
+            };
 
             let fetchSettings = {
                 method: 'PUT',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedData)
             };
 
             fetch("/Precure/" + searchParams.get('id'), fetchSettings)
-                .then((response) => response.json())
-                .then(({ status, json }) => {
-                    if (status === 200) {
-                        alert('✨ Changes saved successfully! ✨');
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
                     } else {
-                        alert('⚠️ There was a problem saving changes. ⚠️');
+                        throw new Error('⚠️ There was a problem saving changes. ⚠️');
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .then((json) => {
+                    alert('✨ Changes saved successfully! ✨');
+                })
+                .catch(error => {
+                    alert(error.message);
+                    console.error('Error:', error);
+                });
+
         });
+
+
     </script>
 
 </body>

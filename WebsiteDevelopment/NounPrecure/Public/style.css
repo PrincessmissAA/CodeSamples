@@ -91,3 +91,48 @@ label {
     display: none;
     animation: fadeIn 0.5s ease-in-out;
 }
+/* ✨ Magical float-in animation ✨ */
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply the animation to banners */
+#successBanner,
+#invalid-form {
+    animation: floatIn 0.6s ease-out;
+}
+/* ✨ Different colors for success and error banners ✨ */
+#successBanner {
+    background-color: #ccffcc; /* Light minty green */
+    color: #006600; /* Dark green text */
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+}
+
+#invalid-form {
+    background-color: #ffe6f0; /* Soft pink */
+    color: #cc0066; /* Cute deep pink text */
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+}
+#successBanner,
+#invalid-form {
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
