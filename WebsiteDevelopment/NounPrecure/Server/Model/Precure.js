@@ -9,9 +9,9 @@ async function createTable() {
             personnality VARCHAR(255) NOT NULL,
             theme VARCHAR(255) NOT NULL,
             stheme VARCHAR(255),
-            precurephoto VARCHAR(255),
+            precure_photo VARCHAR(255),
             hairstyle VARCHAR(255),
-            numteammates INT
+            num_teammates INT
         )
     `;
     return await connection.query(createSql);
@@ -22,21 +22,21 @@ async function getAll(parameters = {}) {
     let selectSql = `SELECT * FROM precure_survey WHERE 1=1`;
     const queryParams = [];
 
-    if (parameters.myName) {
-        selectSql += ` AND myName = ?`;
-        queryParams.push(parameters.myName);
+    if (parameters.name) {
+        selectSql += ` AND name = ?`;
+        queryParams.push(parameters.name);
     }
-    if (parameters.Personnality) {
-        selectSql += ` AND Personnality = ?`;
-        queryParams.push(parameters.Personnality);
+    if (parameters.personnality) {
+        selectSql += ` AND personnality = ?`;
+        queryParams.push(parameters.personnality);
     }
-    if (parameters.Theme) {
-        selectSql += ` AND Theme = ?`;
-        queryParams.push(parameters.Theme);
+    if (parameters.theme) {
+        selectSql += ` AND theme = ?`;
+        queryParams.push(parameters.theme);
     }
-    if (parameters.numTeammates) {
-        selectSql += ` AND numTeammates = ?`;
-        queryParams.push(parameters.numTeammates);
+    if (parameters.num_teammates) {
+        selectSql += ` AND num_teammates = ?`;
+        queryParams.push(parameters.num_teammates);
     }
 
     return await connection.query(selectSql, queryParams);
@@ -56,22 +56,22 @@ async function edit(id, parameters = {}) {
         UPDATE precure_survey 
         SET 
             name = ?, 
-            Personnality = ?, 
-            Theme = ?, 
-            STheme = ?, 
-            PrecurePhoto = ?, 
+            personnality = ?, 
+            theme = ?, 
+            stheme = ?, 
+            precure_photo = ?, 
             hairstyle = ?, 
-            numTeammates = ?
+            num_teammates = ?
         WHERE id = ?
     `;
     const queryParams = [
-        parameters.myName,
-        parameters.Personnality,
-        parameters.Theme,
-        parameters.STheme,
-        parameters.PrecurePhoto,
+        parameters.name,
+        parameters.personnality,
+        parameters.theme,
+        parameters.stheme,
+        parameters.precure_photo,
         parameters.hairstyle,
-        parameters.numTeammates,
+        parameters.num_teammates,
         id
     ];
     return await connection.query(updateSql, queryParams);
@@ -88,17 +88,17 @@ async function remove(id) {
 async function insert(parameters = {}) {
     let insertSQL = `
         INSERT INTO precure_survey 
-        (name, personnality, theme, stheme, precurephoto, hairstyle, numteammates)
+        (name, personnality, theme, stheme, precure_photo, hairstyle, num_teammates)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
     let queryParameters = [
-        parameters.myName,      
-        parameters.Personnality, 
-        parameters.Theme,        
-        parameters.STheme,       
-        parameters.PrecurePhoto, 
+        parameters.name,      
+        parameters.personnality, 
+        parameters.theme,        
+        parameters.stheme,       
+        parameters.precure_photo, 
         parameters.hairstyle,    
-        parameters.numTeammates  
+        parameters.num_teammates  
     ];
     return await connection.query(insertSQL, queryParameters);
 }
@@ -109,22 +109,22 @@ async function updateData(id, parameters = {}) {
         UPDATE precure_survey 
         SET 
             name = ?, 
-            Personnality = ?, 
-            Theme = ?, 
-            STheme = ?, 
-            PrecurePhoto = ?, 
+            personnality = ?, 
+            theme = ?, 
+            stheme = ?, 
+            precure_photo = ?, 
             hairstyle = ?, 
-            numTeammates = ?
+            num_teammates = ?
         WHERE id = ?
     `;
     let queryParameters = [
-        parameters.myName,
-        parameters.Personnality,
-        parameters.Theme,
-        parameters.STheme,
-        parameters.PrecurePhoto,
+        parameters.name,
+        parameters.personnality,
+        parameters.theme,
+        parameters.stheme,
+        parameters.precure_photo,
         parameters.hairstyle,
-        parameters.numTeammates,
+        parameters.num_teammates,
         id // <- very important!!
     ];
     return await connection.query(updateSQL, queryParameters);

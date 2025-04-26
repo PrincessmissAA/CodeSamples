@@ -3,35 +3,30 @@
 
 <head>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>GIMM 340 Book Survey</title>
+    <title>Precure Survey Edit</title>
     <link rel='stylesheet' href='style.css'>
 </head>
 
 <body>
-    <h1>Precure character Personnality</h1>
+    <h1>Precure Character Personality</h1>
 
     <hr />
-    <!-- I used chatGPT for the name form elements -->
+
     <div class='row'>
         <div class='col-2'>
-            <label for="userName">Your Name:</label>
+            <label for="name">Your Name:</label>
         </div>
         <div class='col-10'>
-            <label for="myName">Cure </label>
-            <input type="text" id="userName" name="userName" placeholder="Enter your name" required>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
         </div>
     </div>
 
-
     <div class='row'>
         <div class='col-2'>
-            <label>Personnality Type</label>
-
+            <label>Personality Type</label>
         </div>
         <div class='col-10'>
-
-            <label for="Personnality">Choose a personality type</label>
-            <select id="Personality" name="Personality">
+            <select id="personnality" name="personnality">
                 <option value="Energetic">Energetic</option>
                 <option value="Smart">Smart</option>
                 <option value="Outgoing">Outgoing</option>
@@ -44,29 +39,25 @@
     <div class='row'>
         <div class='col-2'>
             <label>Theme</label>
-
         </div>
         <div class='col-10'>
-            <label for="Theme">Theme:</label><br>
-            <input type="text" id="Theme" name="Theme" value=""><br>
-            <label for="STheme">Sub Theme:</label><br>
-            <input type="text" id="STheme" name="STheme" value=""><br><br>
+            <input type="text" id="theme" name="theme" value="">
+            <br>
+            <label for="stheme">Sub Theme:</label><br>
+            <input type="text" id="stheme" name="stheme" value="">
+            <br><br>
         </div>
     </div>
 
     <div class='row'>
         <div class='col-2'>
-            <label>Picture Upload</label>
-
+            <label>Number of Teammates</label>
         </div>
         <div class='col-10'>
-
-            <label for="PictureUpload">Picture Upload</label>
-            <label for="myCard">Select a file:</label>
-            <input type="file" id="PrecurePhoto" name="PrecurePhoto">
+            <input type="number" id="num_teammates" name="num_teammates" min="1" max="10">
         </div>
     </div>
-    <!-- I used ChatGPT for the hairstyle, number of teammates, color picker form elements -->
+
     <div class='row'>
         <div class='col-2'>
             <label>Hairstyle</label>
@@ -79,133 +70,67 @@
     </div>
 
     <div class='row'>
-        <div class='col-2'>
-            <label>Number of Teammates</label>
-        </div>
-        <div class='col-10'>
-            <label for="numTeammates">Enter number of teammates:</label>
-            <input type="number" id="numTeammates" name="numTeammates" min="1" max="10">
-        </div>
-    </div>
-
-    <div class='row'>
-        <div class='col-2'>
-            <label for="colorPicker">Pick Your Precure Color:</label>
-        </div>
-        <div class='col-10'>
-            <input type="color" id="colorPicker" name="colorPicker" value="#ff66b2">
-        </div>
-    </div>
-
-
-    <div class='row'>
         <div class='col-12'>
-            <button id='submit'>Submit</button>
+            <button id='search'>Save Changes</button>
         </div>
     </div>
 
-    <div class='row'>
-        <div class='col-12'>
-            <button id='search'>Submit</button>
-        </div>
-    </div>
     <hr />
 
     <script>
-        const isEmpty = (obj) => Object.keys(obj).length === 0;
-
-        fetch("/books/", { method: 'GET' })
-            .then((response) => {
-                return new Promise((resolve) => response.json()
-                    .then((json) => resolve({
-                        status: response.status,
-                        json,
-                    })
-                    ));
-            })
-            .then(({ status, json }) => {
-                if (200 === status) {
-                    const bookDropDown = document.getElementById('books');
-                    for (book of json.data) {
-                        let option = document.createElement("option");
-                        option.value = book.id;
-                        option.text = book.title + ' by ' + book.author + ' (' + book.pages + ' pages)';
-                        bookDropDown.add(option);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-
         const paramsString = window.location.search;
         const searchParams = new URLSearchParams(paramsString);
 
-        // get the thing
         fetch("/survey/" + searchParams.get('id'), { method: 'GET' })
-            .then((response) => {
-                return new Promise((resolve) => response.json()
-                    .then((json) => resolve({
-                        status: response.status,
-                        json,
-                    })
-                    ));
-            })
+            .then((response) => response.json())
             .then(({ status, json }) => {
-                if (200 === status) {
+                if (200 === status || json.data) {
                     let row = json.data[0];
-                    document.getElementById('firstName').value = row.first_name;
-                    document.getElementById('lastName').value = row.last_name;
-                    document.getElementById('books').value = row.book_id;
-                    document.getElementById('reason').value = row.why;
+                    document.getElementById('name').value = row.name;
+                    document.getElementById('personnality').value = row.personnality;
+                    document.getElementById('theme').value = row.theme;
+                    document.getElementById('stheme').value = row.stheme;
+                    document.getElementById('num_teammates').value = row.num_teammates;
+                    const hairstyleOptions = document.getElementsByName('hairstyle');
+                    for (let option of hairstyleOptions) {
+                        if (option.value === row.hairstyle) {
+                            option.checked = true;
+                            break;
+                        }
+                    }
                 }
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            .catch(error => console.error('Error:', error));
 
         document.getElementById('search').addEventListener('click', (event) => {
             const formData = new FormData();
 
-            if (document.getElementById('firstName').value.length !== 0) {
-                formData.append('firstName', document.getElementById('firstName').value);
-            }
-            if (document.getElementById('lastName').value.length !== 0) {
-                formData.append('lastName', document.getElementById('lastName').value);
-            }
-            if (document.getElementById('books').value.length !== 0) {
-                formData.append('book', document.getElementById('books').value);
-            }
-            if (document.getElementById('reason').value.length !== 0) {
-                formData.append('reason', document.getElementById('reason').value);
-            }
+            formData.append('name', document.getElementById('name').value);
+            formData.append('personnality', document.getElementById('personnality').value);
+            formData.append('theme', document.getElementById('theme').value);
+            formData.append('stheme', document.getElementById('stheme').value);
+            formData.append('num_teammates', document.getElementById('num_teammates').value);
+            const hairstyle = document.querySelector('input[name="hairstyle"]:checked');
+            formData.append('hairstyle', hairstyle ? hairstyle.value : '');
 
-            //Settings for FETCH API request
             let fetchSettings = {
                 method: 'PUT',
                 body: formData
             };
 
-            //Send FETCH API request
-            fetch("/" + searchParams.get('id'), fetchSettings)
-                .then((response) => {
-                    return new Promise((resolve) => response.json()
-                        .then((json) => resolve({
-                            status: response.status,
-                            json,
-                        })
-                        ));
-                })
-                //Logic to display errors on form 
+            fetch("/Precure/" + searchParams.get('id'), fetchSettings)
+                .then((response) => response.json())
                 .then(({ status, json }) => {
-
+                    if (status === 200) {
+                        alert('✨ Changes saved successfully! ✨');
+                    } else {
+                        alert('⚠️ There was a problem saving changes. ⚠️');
+                    }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            return;
-        });               
+                .catch(error => console.error('Error:', error));
+        });
     </script>
+
 </body>
 
 </html>

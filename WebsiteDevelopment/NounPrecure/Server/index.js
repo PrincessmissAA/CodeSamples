@@ -58,14 +58,14 @@ app.get('/survey/:id', upload.none(), async (request, response) => {
 // POST route with validation
 // POST route with validation
 app.post('/', 
-    upload.single('PrecurePhoto'),
+    upload.single('precure_photo'),
     [
-        check('myName').trim().notEmpty().withMessage('Name is required.'),
-        check('Personnality').trim().notEmpty().withMessage('Personality is required.'),
-        check('Theme').trim().notEmpty().withMessage('Theme is required.'),
-        check('STheme').trim().notEmpty().withMessage('Sub Theme is required.'),
+        check('name').trim().notEmpty().withMessage('Name is required.'),
+        check('personnality').trim().notEmpty().withMessage('Personality is required.'),
+        check('theme').trim().notEmpty().withMessage('Theme is required.'),
+        check('stheme').trim().notEmpty().withMessage('Sub Theme is required.'),
         check('hairstyle').notEmpty().withMessage('Hairstyle selection is required.'),
-        check('numTeammates').isInt({ min: 1, max: 10 }).withMessage('Teammates must be a number between 1 and 10.')
+        check('num_teammates').isInt({ min: 1, max: 10 }).withMessage('Teammates must be a number between 1 and 10.')
     ], 
     async (request, response) => {
         const errors = validationResult(request);
@@ -75,13 +75,13 @@ app.post('/',
 
         try {
             const newPrecure = {
-                myName: request.body.myName,
-                Personnality: request.body.Personnality,
-                Theme: request.body.Theme,
-                STheme: request.body.STheme,
-                PrecurePhoto: request.file ? request.file.filename : null,
+                name: request.body.myName,
+                personnality: request.body.Personnality,
+                theme: request.body.Theme,
+                stheme: request.body.STheme,
+                precure_photo: request.file ? request.file.filename : null,
                 hairstyle: request.body.hairstyle,
-                numTeammates: parseInt(request.body.numTeammates)
+                num_teammates: parseInt(request.body.numTeammates)
             };
             const result = await Precure.insert(newPrecure);
             response.status(200).json({ data: result });
@@ -108,12 +108,12 @@ app.delete('/Precure/:id', async (request, response) => {
 app.put('/Precure/:id', 
     upload.none(),
     [
-        check('myName').trim().notEmpty().withMessage('Name is required.'),
-        check('Personnality').trim().notEmpty().withMessage('Personality is required.'),
-        check('Theme').trim().notEmpty().withMessage('Theme is required.'),
-        check('STheme').trim().notEmpty().withMessage('Sub Theme is required.'),
+        check('name').trim().notEmpty().withMessage('Name is required.'),
+        check('personnality').trim().notEmpty().withMessage('Personality is required.'),
+        check('theme').trim().notEmpty().withMessage('Theme is required.'),
+        check('stheme').trim().notEmpty().withMessage('Sub Theme is required.'),
         check('hairstyle').notEmpty().withMessage('Hairstyle selection is required.'),
-        check('numTeammates').isInt({ min: 1, max: 10 }).withMessage('Teammates must be a number between 1 and 10.')
+        check('num_teammates').isInt({ min: 1, max: 10 }).withMessage('Teammates must be a number between 1 and 10.')
     ],
     async (request, response) => {
         const errors = validationResult(request);
