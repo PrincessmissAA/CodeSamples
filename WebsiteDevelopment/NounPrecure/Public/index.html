@@ -128,7 +128,7 @@
             const hairstyle = document.querySelector('input[name="hairstyle"]:checked');
             formData.append('hairstyle', hairstyle ? hairstyle.value : '');
     
-            formData.append('num_teammates', document.getElementById('numTeammates').value);
+            formData.append('num_teammates', document.getElementById('num_teammates').value);
             formData.append('precure_photo', fileField.files[0]);
     
             //Settings for FETCH API request

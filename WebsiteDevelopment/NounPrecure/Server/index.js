@@ -75,14 +75,14 @@ app.post('/',
 
         try {
             const newPrecure = {
-                name: request.body.myName,
-                personnality: request.body.Personnality,
-                theme: request.body.Theme,
-                stheme: request.body.STheme,
+                name: request.body.name,
+                personnality: request.body.personnality,
+                theme: request.body.theme,
+                stheme: request.body.stheme,
                 precure_photo: request.file ? request.file.filename : null,
                 hairstyle: request.body.hairstyle,
-                num_teammates: parseInt(request.body.numTeammates)
-            };
+                num_teammates: parseInt(request.body.num_teammates)
+            };            
             const result = await Precure.insert(newPrecure);
             response.status(200).json({ data: result });
         } catch (error) {
