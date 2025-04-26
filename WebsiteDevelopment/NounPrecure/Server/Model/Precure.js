@@ -1,6 +1,22 @@
 //I used Chatgpt to help make the async functions
 const connection = require('./Connection');
 
+async function createTable() {
+    const createSql = `
+        CREATE TABLE IF NOT EXISTS precure_survey (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            personnality VARCHAR(255) NOT NULL,
+            theme VARCHAR(255) NOT NULL,
+            stheme VARCHAR(255),
+            precurephoto VARCHAR(255),
+            hairstyle VARCHAR(255),
+            numteammates INT
+        )
+    `;
+    return await connection.query(createSql);
+}
+
 // Get all records
 async function getAll(parameters = {}) {
     let selectSql = `SELECT * FROM precure_survey WHERE 1=1`;
@@ -29,52 +45,91 @@ async function getAll(parameters = {}) {
 
 // Get one record by ID
 async function getById(id) {
-    const selectSql = `SELECT * FROM Precure WHERE id = ?`;
+    const selectSql = `SELECT * FROM precure_survey WHERE id = ?`;
     return await connection.query(selectSql, [id]);
 }
 
+
 // Update a record by ID
 async function edit(id, parameters = {}) {
-    const updateSql = `UPDATE Precure SET name = ?, choice = ?, filename = ? WHERE id = ?`;
-    const queryParams = [parameters.name, parameters.choice, parameters.filename, id];
+    const updateSql = `
+        UPDATE precure_survey 
+        SET 
+            name = ?, 
+            Personnality = ?, 
+            Theme = ?, 
+            STheme = ?, 
+            PrecurePhoto = ?, 
+            hairstyle = ?, 
+            numTeammates = ?
+        WHERE id = ?
+    `;
+    const queryParams = [
+        parameters.myName,
+        parameters.Personnality,
+        parameters.Theme,
+        parameters.STheme,
+        parameters.PrecurePhoto,
+        parameters.hairstyle,
+        parameters.numTeammates,
+        id
+    ];
     return await connection.query(updateSql, queryParams);
 }
 
+
 // Delete a record by ID
 async function remove(id) {
-    const deleteSql = `DELETE FROM Precure WHERE id = ?`;
+    const deleteSql = `DELETE FROM precure_survey WHERE id = ?`;
     return await connection.query(deleteSql, [id]);
 }
 
-async function insert(paramaters = {}) {
-    let insertSQL = `INSERT INTO precure_survey (book_id, name, personnality, theme, Stheme, precurePhoto, hairstyle, numTeammates) VALUES (?, ?, ?, ?)`,
-        queryParameters = [
-            parseInt(paramaters.book),
-            paramaters.myName,
-            paramaters.Personnality,
-            paramaters.Theme,
-            paramaters.STheme,
-            paramaters.PrecurePhoto,
-            paramaters.hairstyle,
-            paramaters.numTeammates
-        ];
+
+async function insert(parameters = {}) {
+    let insertSQL = `
+        INSERT INTO precure_survey 
+        (name, personnality, theme, stheme, precurephoto, hairstyle, numteammates)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+    let queryParameters = [
+        parameters.myName,      
+        parameters.Personnality, 
+        parameters.Theme,        
+        parameters.STheme,       
+        parameters.PrecurePhoto, 
+        parameters.hairstyle,    
+        parameters.numTeammates  
+    ];
     return await connection.query(insertSQL, queryParameters);
 }
 
-async function updateData(id, parameters = {}){
-    let updateSQL = `UPDATE precure_survey SET myName = ?, Personnality = ?, Theme = ?, Stheme = ?, precurePhoto = ?, hairstyle = ?, numTeammates = ? WHERE id = ?`,
-        queryParameters = [
-            parseInt(paramaters.book),
-            paramaters.myName,
-            paramaters.Personnality,
-            paramaters.Theme,
-            paramaters.STheme,
-            paramaters.PrecurePhoto,
-            paramaters.hairstyle,
-            paramaters.numTeammates
-        ];
-    return await connection.query(insertSQL, queryParameters);
+
+async function updateData(id, parameters = {}) {
+    let updateSQL = `
+        UPDATE precure_survey 
+        SET 
+            name = ?, 
+            Personnality = ?, 
+            Theme = ?, 
+            STheme = ?, 
+            PrecurePhoto = ?, 
+            hairstyle = ?, 
+            numTeammates = ?
+        WHERE id = ?
+    `;
+    let queryParameters = [
+        parameters.myName,
+        parameters.Personnality,
+        parameters.Theme,
+        parameters.STheme,
+        parameters.PrecurePhoto,
+        parameters.hairstyle,
+        parameters.numTeammates,
+        id // <- very important!!
+    ];
+    return await connection.query(updateSQL, queryParameters);
 }
+
 
 // FIXED: module.exports not "modules.export"
 module.exports = {
@@ -83,5 +138,6 @@ module.exports = {
     insert,
     edit,
     remove,
-    updateData
+    updateData, 
+    createTable
 };

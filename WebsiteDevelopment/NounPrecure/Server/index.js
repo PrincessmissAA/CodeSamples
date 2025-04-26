@@ -5,6 +5,15 @@ const multer = require('multer');
 const { check, validationResult } = require('express-validator');
 const Precure = require('./Model/Precure');
 
+// Create table when server starts
+Precure.createTable()
+    .then(() => {
+        console.log('🎀 Table checked/created successfully! 🎀');
+    })
+    .catch((error) => {
+        console.error('Error creating table:', error);
+    });
+
 // Setup defaults for script
 const app = express();
 app.use(express.static(path.join(__dirname, '../public')));
@@ -35,6 +44,18 @@ app.get('/Precure/', upload.none(), async (request, response) => {
     }
 });
 
+app.get('/survey/:id', upload.none(), async (request, response) => {
+    try {
+        const result = await Precure.getById(request.params.id);
+        response.json({ data: result });
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ message: '🎀 Error retrieving record 🎀' });
+    }
+});
+
+
+// POST route with validation
 // POST route with validation
 app.post('/', 
     upload.single('PrecurePhoto'),
@@ -52,51 +73,25 @@ app.post('/',
             return response.status(400).json({ errors: errors.array() });
         }
 
-        let baseSql = `SELECT * FROM precure_survey WHERE 1=1`;
-        const whereStatements = [], orderByStatements = [], queryParameters = [];
-
-        if (request.body.myName) {
-            whereStatements.push('myName LIKE ?');
-            queryParameters.push('%' + request.body.myName + '%');
-        }
-        if (request.body.Personnality) {
-            whereStatements.push('Personnality = ?');
-            queryParameters.push(request.body.Personnality);
-        }
-        if (request.body.Theme) {
-            whereStatements.push('Theme = ?');
-            queryParameters.push(request.body.Theme);
-        }
-        if (request.body.numTeammates && !isNaN(parseInt(request.body.numTeammates))) {
-            whereStatements.push('numTeammates = ?');
-            queryParameters.push(parseInt(request.body.numTeammates));
-        }
-        if (request.body.sort === 'ASC' || request.body.sort === 'DESC') {
-            orderByStatements.push(`id ${request.body.sort}`);
-        }
-        if (whereStatements.length > 0) {
-            baseSql += ' AND ' + whereStatements.join(' AND ');
-        }
-        if (orderByStatements.length > 0) {
-            baseSql += ' ORDER BY ' + orderByStatements.join(', ');
-        }
-        const limit = parseInt(request.body.limit);
-        if (!isNaN(limit) && limit > 0 && limit <= 10) {
-            baseSql += ' LIMIT ' + limit;
-        }
-
         try {
-            const result = await Precure.query(baseSql, queryParameters);
-            response.setHeader('Access-Control-Allow-Origin', '*');
-            response.json({ data: result });
+            const newPrecure = {
+                myName: request.body.myName,
+                Personnality: request.body.Personnality,
+                Theme: request.body.Theme,
+                STheme: request.body.STheme,
+                PrecurePhoto: request.file ? request.file.filename : null,
+                hairstyle: request.body.hairstyle,
+                numTeammates: parseInt(request.body.numTeammates)
+            };
+            const result = await Precure.insert(newPrecure);
+            response.status(200).json({ data: result });
         } catch (error) {
             console.error(error);
-            response.status(500)
-                .setHeader('Access-Control-Allow-Origin', '*')
-                .json({ message: '🎀 Something went wrong with the server. 🎀' });
+            response.status(500).json({ message: '🎀 Something went wrong inserting into the server 🎀' });
         }
     }
 );
+
 
 // DELETE route
 app.delete('/Precure/:id', async (request, response) => {

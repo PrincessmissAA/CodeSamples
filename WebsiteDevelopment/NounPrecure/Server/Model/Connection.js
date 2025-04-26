@@ -11,9 +11,9 @@ async function query(sql, params) {
         //Stop, Let's make the database connection
         connection = await mysql.createConnection({
             host: "student-databases.cvode4s4cwrc.us-west-2.rds.amazonaws.com",
-            user: "in_class_activity",
-            password: "in_class_activity",
-            database: 'in_class_activity'
+            user: "avywilford",
+            password: "4ffvz1uNRgHXhtp5vVAqwmk68D72dFjBR0W",
+            database: 'avywilford',
         });
     }
     //Stop run the database code first

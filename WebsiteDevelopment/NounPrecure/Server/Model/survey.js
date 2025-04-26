@@ -1,4 +1,4 @@
-const connection = require('./connection');
+const connection = require('./Connection');
 
 async function getAll() {
     let selectSql = `SELECT * FROM PrecureForm`;
