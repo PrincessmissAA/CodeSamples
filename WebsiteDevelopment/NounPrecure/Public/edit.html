@@ -128,14 +128,15 @@
 
 
         document.getElementById('search').addEventListener('click', (event) => {
+            event.preventDefault();
+            let numTeammatesInput = document.getElementById('num_teammates').value;
             const updatedData = {
-                name: document.getElementById('name').value,
+                name: document.getElementById('name').value.trim(),
                 season: document.getElementById('season').value,
                 theme: document.getElementById('theme').value,
-                stheme: document.getElementById('stheme').value,
-                num_teammates: parseInt(document.getElementById('num_teammates').value),
+                stheme: document.getElementById('stheme').value.trim(),
+                num_teammates: numTeammatesInput ? parseInt(numTeammatesInput) : 1,
                 hairstyle: document.querySelector('input[name="hairstyle"]:checked')?.value || '',
-                precure_photo: null // ✨ add this line ✨
             };
 
             let fetchSettings = {
