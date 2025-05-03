@@ -4,197 +4,248 @@
 <head>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Precure Survey</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel='stylesheet' href='style.css'>
 </head>
 
 <body>
-    <h1>Precure character Tracker</h1>
-    <a href="results.html">results page</a>
-    <a href="edit.html">edit page</a>
+    <div class="container py-4">
+        <h1>🌸 Precure Character Tracker 🌸</h1>
+        <nav>
+            <a href="results.html">View All Results</a> |
+            <a href="edit.html">Edit Entries</a>
+        </nav>
 
-    <hr />
-    <!-- I used chatGPT for the name form elements -->
-    <div class='row'>
-        <div class='col-2'>
-            <label for="name">Your Name:</label>
-        </div>
-        <div class='col-10'>
-            <label for="name">Cure </label>
-            <input type="text" id="name" name="name" placeholder="Enter your name" required>
-            <div id="name-error" class="text-danger"></div>
-        </div>
+        <hr />
+
+        <!-- 🔍 Search Section (GET) -->
+        <section>
+            <h2>🔍 Search Precure Characters</h2>
+            <div class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label for="search-name">Name</label>
+                    <input type="text" class="form-control" id="search-name" placeholder="Cure name">
+                </div>
+                <div class="col-md-3">
+                    <label for="search-theme">Theme</label>
+                    <input type="text" class="form-control" id="search-theme" placeholder="e.g. hope">
+                </div>
+                <div class="col-md-3">
+                    <label for="search-stheme">Sub Theme</label>
+                    <input type="text" class="form-control" id="search-stheme" placeholder="e.g. stars">
+                </div>
+                <div class="col-md-3">
+                    <label for="search-season">Season</label>
+                    <select class="form-select" id="search-season">
+                        <option value="">All</option>
+                        <option value="heartcatch">Heartcatch</option>
+                        <option value="smile">Smile</option>
+                        <option value="tropical_rouge">Tropical Rouge</option>
+                        <option value="star_twinkle">Star Twinkle</option>
+                    </select>
+                </div>
+                <div class="col-md-12 text-end mt-2">
+                    <button class="btn btn-primary" id="search-button">Search</button>
+                </div>
+            </div>
+            <div id="searchResults" class="mt-3"></div>
+        </section>
+
+        <hr />
+
+        <!-- 📝 Submission Section (POST) -->
+        <section>
+            <h2>📝 Submit a New Precure</h2>
+
+            <form id="precureForm" enctype="multipart/form-data">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="name">Name</label>
+                        <input class="form-control" type="text" id="name" name="name" required>
+                        <div id="name-error" class="text-danger"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="season">Season</label>
+                        <select class="form-select" id="season" name="season" required>
+                            <option value="">Choose a season</option>
+                            <option value="heartcatch">Heartcatch</option>
+                            <option value="smile">Smile</option>
+                            <option value="tropical_rouge">Tropical Rouge</option>
+                            <option value="star_twinkle">Star Twinkle</option>
+                        </select>
+                        <div id="season-error" class="text-danger"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="theme">Theme</label>
+                    <input class="form-control" type="text" id="theme" name="theme" required>
+                    <div id="theme-error" class="text-danger"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="stheme">Sub Theme</label>
+                    <input class="form-control" type="text" id="stheme" name="stheme" required>
+                    <div id="stheme-error" class="text-danger"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="precure_photo">Precure Image</label>
+                    <input class="form-control" type="file" id="precure_photo" name="precure_photo">
+                </div>
+
+                <div class="mb-3">
+                    <label>Hairstyle</label><br>
+                    <label><input type="radio" name="hairstyle" value="Short" required> Short</label>
+                    <label><input type="radio" name="hairstyle" value="Medium" required> Medium</label>
+                    <label><input type="radio" name="hairstyle" value="Long" required> Long</label>
+                    <div id="hairstyle-error" class="text-danger"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="num_teammates">Number of Teammates</label>
+                    <input class="form-control" type="number" id="num_teammates" name="num_teammates" min="1" max="10"
+                        required>
+                    <div id="num_teammates-error" class="text-danger"></div>
+                </div>
+
+                <button type="button" class="btn btn-success" id="submit">Submit</button>
+            </form>
+
+            <div id="successBanner" hidden></div>
+            <div id="invalid-form" class="text-danger" hidden></div>
+        </section>
     </div>
-
-    <div class='row'>
-        <div class='col-2'>
-            <label>season</label>
-        </div>
-        <div class='col-10'>
-            <label for="season">Choose a season</label>
-            <select id="season" name="season">
-                <option value="futari_wa">futari wa</option>
-                <option value="futari_wa_max_heart">futari wa max heart</option>
-                <option value="splash_star">splash star</option>
-                <option value="yes_precure_5_gogo">yes precure 5 gogo</option>
-                <option value="fresh">fresh</option>
-                <option value="heartcatch">heartcatch</option>
-                <option value="suite">suite</option>
-                <option value="smile">smile</option>
-                <option value="doki_doki">doki doki</option>
-                <option value="happiness_charge">happiness charge</option>
-                <option value="go_princess">go princess</option>
-                <option value="maho_tsukai">maho tsukai</option>
-                <option value="kira_kira">kira kira precure a la mode</option>
-                <option value="hugtto">hugtto</option>
-                <option value="star_twinkle">star twinkle</option>
-                <option value="healin_good">healin' good</option>
-                <option value="tropical_rouge">tropical rouge</option>
-                <option value="delicious_party">delicious party</option>
-                <option value="hero_girl_sky">hero girl sky</option>
-                <option value="wonderful">wonderful</option>
-                <option value="kimi_to_idol">you and idol</option>
-                <option value="movie_specific">movie specific</option>
-            </select>
-            <div id="season-error" class="text-danger"></div>
-        </div>
-    </div>
-
-    <div class='row'>
-        <div class='col-2'>
-            <label>Theme</label>
-        </div>
-        <div class='col-10'>
-            <label for="theme">Theme:</label><br>
-            <input type="text" id="theme" name="theme" value=""><br>
-            <div id="theme-error" class="text-danger"></div>
-
-            <label for="stheme">Sub Theme:</label><br>
-            <input type="text" id="stheme" name="stheme" value=""><br><br>
-            <div id="stheme-error" class="text-danger"></div>
-        </div>
-    </div>
-
-    <div class='row'>
-        <div class='col-2'>
-            <label>Picture Upload</label>
-        </div>
-        <div class='col-10'>
-            <label for="precure_photo">Select a file:</label>
-            <input type="file" id="precure_photo" name="precure_photo">
-            <!-- (no error div needed for file upload in your current validation) -->
-        </div>
-    </div>
-
-    <div class='row'>
-        <div class='col-2'>
-            <label>Hairstyle</label>
-        </div>
-        <div class='col-10'>
-            <label><input type="radio" name="hairstyle" value="Short"> Short</label>
-            <label><input type="radio" name="hairstyle" value="Medium"> Medium</label>
-            <label><input type="radio" name="hairstyle" value="Long"> Long</label>
-            <div id="hairstyle-error" class="text-danger"></div>
-        </div>
-    </div>
-
-    <div class='row'>
-        <div class='col-2'>
-            <label>Number of Teammates</label>
-        </div>
-        <div class='col-10'>
-            <label for="num_teammates">Enter number of teammates:</label>
-            <input type="number" id="num_teammates" name="num_teammates" min="1" max="10">
-            <div id="num_teammates-error" class="text-danger"></div>
-        </div>
-    </div>
-
-    <div class='row'>
-        <div class='col-12'>
-            <button id='submit'>Submit</button>
-        </div>
-    </div>
-
-    <div id="successBanner" hidden></div>
-    <div id="invalid-form" class="text-danger" hidden></div>
-
-
-    <hr />
 
     <script>
-        //Hide banners at start
-        const errorBanner = document.getElementById('invalid-form');
-        const successBanner = document.getElementById('successBanner');
-        errorBanner.hidden = true;
-        successBanner.hidden = true;
+        // Confirm before delete example (for future use)
+        function confirmDelete(id) {
+            if (confirm('Are you sure you want to delete this record?')) {
+                fetch(`/Precure/${id}`, { method: 'DELETE' })
+                    .then(res => res.json())
+                    .then(json => alert('Deleted successfully!'))
+                    .catch(err => console.error('Delete failed:', err));
+            }
+        }
 
-        //Click event handler
-        document.getElementById('submit').addEventListener('click', () => {
-            const fileField = document.querySelector('input[type="file"]');
+        // Updated search with ORDER BY
+        document.getElementById('search-button').addEventListener('click', () => {
+            const params = new URLSearchParams();
+            const name = document.getElementById('search-name').value;
+            const theme = document.getElementById('search-theme').value;
+            const stheme = document.getElementById('search-stheme').value;
+            const season = document.getElementById('search-season').value;
 
-            //Build form data object to send in request to server
-            const formData = new FormData();
-            formData.append('name', document.getElementById('name').value); // <-- fixed id here
-            formData.append('season', document.getElementById('season').value);
-            formData.append('theme', document.getElementById('theme').value);
-            formData.append('stheme', document.getElementById('stheme').value);
+            if (name) params.append('name', name);
+            if (theme) params.append('theme', theme);
+            if (stheme) params.append('stheme', stheme);
+            if (season) params.append('season', season);
+            params.append('order', 'season'); // custom query param for ordering
 
-            const hairstyle = document.querySelector('input[name="hairstyle"]:checked');
-            formData.append('hairstyle', hairstyle ? hairstyle.value : '');
-
-            formData.append('num_teammates', document.getElementById('num_teammates').value);
-            formData.append('precure_photo', fileField.files[0]);
-
-            //Settings for FETCH API request
-            let fetchSettings = {
-                method: 'POST',
-                body: formData
-            };
-
-            //Send FETCH API request
-            fetch("http://localhost:3000/", fetchSettings)
-                .then((response) => {
-                    return new Promise((resolve) => response.json()
-                        .then((json) => resolve({
-                            status: response.status,
-                            json,
-                        }))
-                    );
-                })
-                .then(({ status, json }) => {
-                    const errorMessages = document.getElementsByClassName('text-danger');
-
-                    // Clear previous banners and errors
-                    errorBanner.style.display = 'none';
-                    successBanner.style.display = 'none';
-                    for (htmlElement of errorMessages) {
-                        htmlElement.innerHTML = '&nbsp;';
-                    }
-
-                    if (status === 400) {
-                        errorBanner.innerText = '⚠️ Form has errors. Please correct them and resubmit. ⚠️';
-                        errorBanner.style.display = 'block';
-                    } else if (status === 200) {
-                        successBanner.innerText = '✨ Form submitted successfully! ✨';
-                        successBanner.className = ''; // clear any old classes
-                        successBanner.classList.add('text-success'); // add success text
-                        successBanner.style.display = 'block';
+            fetch(`/Precure/?${params.toString()}`, { method: 'GET' })
+                .then((res) => res.json())
+                .then(({ data }) => {
+                    const container = document.getElementById('searchResults');
+                    if (Array.isArray(data) && data.length > 0) {
+                        let html = `<table class="table"><thead><tr>
+                            <th>Name</th><th>Season</th><th>Theme</th><th>Sub Theme</th><th>Teammates</th></tr></thead><tbody>`;
+                        for (const row of data) {
+                            html += `<tr>
+                                <td>${row.name}</td>
+                                <td>${row.season}</td>
+                                <td>${row.theme}</td>
+                                <td>${row.stheme}</td>
+                                <td>${row.num_teammates}</td>
+                            </tr>`;
+                        }
+                        html += '</tbody></table>';
+                        container.innerHTML = html;
+                    } else {
+                        container.innerHTML = `<p class="text-danger">No matching Precures found 🥺</p>`;
                     }
                 })
-
-
-                .catch(error => {
-                    console.error('Error:', error);
+                .catch((error) => {
+                    console.error('GET error:', error);
+                    document.getElementById('searchResults').innerHTML = `<p class="text-danger">Error loading results 💥</p>`;
                 });
-            return;
         });
     </script>
+    <script>
+        // POST submission with full validation
+        document.getElementById('submit').addEventListener('click', () => {
+            const form = document.getElementById('precureForm');
+            const errorBanner = document.getElementById('invalid-form');
+            const successBanner = document.getElementById('successBanner');
 
+            // Clear previous errors
+            errorBanner.hidden = true;
+            successBanner.hidden = true;
+            document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
+
+            let hasError = false;
+
+            const getField = id => document.getElementById(id);
+            const checkField = (id, message) => {
+                if (!getField(id).value.trim()) {
+                    getField(id + '-error').innerText = message;
+                    hasError = true;
+                }
+            };
+
+            checkField('name', 'Name is required.');
+            checkField('season', 'Season is required.');
+            checkField('theme', 'Theme is required.');
+            checkField('stheme', 'Sub Theme is required.');
+            const num = getField('num_teammates');
+            if (!num.value || parseInt(num.value) < 1 || parseInt(num.value) > 10) {
+                getField('num_teammates-error').innerText = 'Enter a number between 1 and 10.';
+                hasError = true;
+            }
+
+            const hairstyle = document.querySelector('input[name="hairstyle"]:checked');
+            if (!hairstyle) {
+                getField('hairstyle-error').innerText = 'Select a hairstyle.';
+                hasError = true;
+            }
+
+            const fileField = getField('precure_photo');
+            if (!fileField.files || fileField.files.length === 0) {
+                if (!document.getElementById('photo-error')) {
+                    fileField.insertAdjacentHTML('afterend', '<div class="text-danger" id="photo-error">Image is required.</div>');
+                }
+                hasError = true;
+            } else {
+                const existing = document.getElementById('photo-error');
+                if (existing) existing.remove();
+            }
+
+            if (hasError) {
+                errorBanner.innerText = '⚠️ Please fix the highlighted fields. ⚠️';
+                errorBanner.hidden = false;
+                return;
+            }
+
+            const formData = new FormData(form);
+            formData.append('precure_photo', fileField.files[0]);
+
+            fetch("http://localhost:3000/", {
+                method: 'POST',
+                body: formData
+            })
+                .then((response) => response.json().then(json => ({ status: response.status, json })))
+                .then(({ status, json }) => {
+                    if (status === 400) {
+                        errorBanner.innerText = '⚠️ Form has server-side errors. ⚠️';
+                        errorBanner.hidden = false;
+                    } else if (status === 200) {
+                        successBanner.innerText = '✨ Submission successful! ✨';
+                        successBanner.hidden = false;
+                        form.reset();
+                    }
+                })
+                .catch(error => console.error('POST error:', error));
+        });
+    </script>
 </body>
-
 
 </html>

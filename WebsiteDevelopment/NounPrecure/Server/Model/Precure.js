@@ -1,4 +1,4 @@
-//I used Chatgpt to help make the async functions
+// Precure.js — enhanced for PA 4–11 compliance
 const connection = require('./Connection');
 
 async function createTable() {
@@ -17,7 +17,6 @@ async function createTable() {
     return await connection.query(createSql);
 }
 
-// Get all records
 async function getAll(parameters = {}) {
     let selectSql = `SELECT * FROM precure_survey WHERE 1=1`;
     const queryParams = [];
@@ -34,58 +33,66 @@ async function getAll(parameters = {}) {
         selectSql += ` AND theme = ?`;
         queryParams.push(parameters.theme);
     }
+    if (parameters.stheme) {
+        selectSql += ` AND stheme = ?`;
+        queryParams.push(parameters.stheme);
+    }
     if (parameters.num_teammates) {
         selectSql += ` AND num_teammates = ?`;
         queryParams.push(parameters.num_teammates);
     }
 
-    selectSql += ` LIMIT 100`;
+    if (parameters.order) {
+        const allowedColumns = ['season', 'name', 'theme', 'num_teammates'];
+        if (allowedColumns.includes(parameters.order)) {
+            selectSql += ` ORDER BY ${parameters.order}`;
+        }
+    }
 
+    selectSql += ` LIMIT 100`;
     return await connection.query(selectSql, queryParams);
 }
 
-
-// Get one record by ID
 async function getById(id) {
     const selectSql = `SELECT * FROM precure_survey WHERE id = ?`;
     return await connection.query(selectSql, [id]);
 }
 
-
-// Update a record by ID
 async function edit(id, parameters = {}) {
-    const updateSql = `
+    let updateSql = `
         UPDATE precure_survey 
         SET 
             name = ?, 
             season = ?, 
             theme = ?, 
             stheme = ?, 
-            precure_photo = ?, 
             hairstyle = ?, 
-            num_teammates = ?
-        WHERE id = ?
-    `;
+            num_teammates = ?`;
+
     const queryParams = [
         parameters.name,
         parameters.season,
         parameters.theme,
         parameters.stheme,
-        parameters.precure_photo,
         parameters.hairstyle,
-        parameters.num_teammates,
-        id
+        parameters.num_teammates
     ];
+
+    if (parameters.precure_photo !== undefined && parameters.precure_photo !== null) {
+        updateSql += `, precure_photo = ?`;
+        queryParams.push(parameters.precure_photo);
+    }
+
+    updateSql += ` WHERE id = ?`;
+    queryParams.push(id);
+
     return await connection.query(updateSql, queryParams);
 }
 
-
-// Delete a record by ID
 async function remove(id) {
     const deleteSql = `DELETE FROM precure_survey WHERE id = ?`;
     return await connection.query(deleteSql, [id]);
 }
-
 
 async function insert(parameters = {}) {
     let insertSQL = `
@@ -105,49 +112,11 @@ async function insert(parameters = {}) {
     return await connection.query(insertSQL, queryParameters);
 }
 
-
-async function edit(id, parameters = {}) {
-    let updateSql = `
-        UPDATE precure_survey 
-        SET 
-            name = ?, 
-            season = ?, 
-            theme = ?, 
-            stheme = ?, 
-            hairstyle = ?, 
-            num_teammates = ?
-    `;
-
-    const queryParams = [
-        parameters.name,
-        parameters.season,
-        parameters.theme,
-        parameters.stheme,
-        parameters.hairstyle,
-        parameters.num_teammates
-    ];
-
-    // ✨ Only update precure_photo if provided!
-    if (parameters.precure_photo !== undefined && parameters.precure_photo !== null) {
-        updateSql += `, precure_photo = ? `;
-        queryParams.push(parameters.precure_photo);
-    }
-
-    updateSql += ` WHERE id = ?`;
-    queryParams.push(id);
-
-    return await connection.query(updateSql, queryParams);
-}
-
-
-
-// FIXED: module.exports not "modules.export"
 module.exports = {
     getAll,
     getById,
     insert,
     edit,
     remove,
-    edit, 
     createTable
 };

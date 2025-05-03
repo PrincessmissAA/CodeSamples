@@ -9,163 +9,204 @@
 
 <body>
     <h1>Precure Character Tracker</h1>
+    <nav>
+        <a href="results.html">View All Results</a>
+        <a href="index.html">Add more characters</a>
+    </nav>
 
     <hr />
 
-    <div class='row'>
-        <div class='col-2'>
-            <label for="name">Your Name:</label>
+    <form id="editForm" enctype="multipart/form-data">
+        <div class='row'>
+            <div class='col-2'>
+                <label for="name">Your Name:</label>
+            </div>
+            <div class='col-10'>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                <div id="name-error" class="text-danger"></div>
+            </div>
         </div>
-        <div class='col-10'>
-            <input type="text" id="name" name="name" placeholder="Enter your name" required>
-        </div>
-    </div>
 
-    <div class='row'>
-        <div class='col-2'>
-            <label>season</label>
+        <div class='row'>
+            <div class='col-2'>
+                <label for="season">Choose a season</label>
+            </div>
+            <div class='col-10'>
+                <select id="season" name="season" required>
+                    <option value="">-- Select a season --</option>
+                    <option value="futari_wa">futari wa</option>
+                    <option value="futari_wa_max_heart">futari wa max heart</option>
+                    <option value="splash_star">splash star</option>
+                    <option value="yes_precure_5_gogo">yes precure 5 gogo</option>
+                    <option value="fresh">fresh</option>
+                    <option value="heartcatch">heartcatch</option>
+                    <option value="suite">suite</option>
+                    <option value="smile">smile</option>
+                    <option value="doki_doki">doki doki</option>
+                    <option value="happiness_charge">happiness charge</option>
+                    <option value="go_princess">go princess</option>
+                    <option value="maho_tsukai">maho tsukai</option>
+                    <option value="kira_kira">kira kira precure a la mode</option>
+                    <option value="hugtto">hugtto</option>
+                    <option value="star_twinkle">star twinkle</option>
+                    <option value="healin_good">healin' good</option>
+                    <option value="tropical_rouge">tropical rouge</option>
+                    <option value="delicious_party">delicious party</option>
+                    <option value="hero_girl_sky">hero girl sky</option>
+                    <option value="wonderful">wonderful</option>
+                    <option value="kimi_to_idol">you and idol</option>
+                    <option value="movie_specific">movie specific</option>
+                </select>
+                <div id="season-error" class="text-danger"></div>
+            </div>
         </div>
-        <div class='col-10'>
-            <label for="season">Choose a season</label>
-            <select id="season" name="season">
-                <option value="futari_wa">futari wa</option>
-                <option value="futari_wa_max_heart">futari wa max heart</option>
-                <option value="splash_star">splash star</option>
-                <option value="yes_precure_5_gogo">yes precure 5 gogo</option>
-                <option value="fresh">fresh</option>
-                <option value="heartcatch">heartcatch</option>
-                <option value="suite">suite</option>
-                <option value="smile">smile</option>
-                <option value="doki_doki">doki doki</option>
-                <option value="happiness_charge">happiness charge</option>
-                <option value="go_princess">go princess</option>
-                <option value="maho_tsukai">maho tsukai</option>
-                <option value="kira_kira">kira kira precure a la mode</option>
-                <option value="hugtto">hugtto</option>
-                <option value="star_twinkle">star twinkle</option>
-                <option value="healin_good">healin' good</option>
-                <option value="tropical_rouge">tropical rouge</option>
-                <option value="delicious_party">delicious party</option>
-                <option value="hero_girl_sky">hero girl sky</option>
-                <option value="wonderful">wonderful</option>
-                <option value="kimi_to_idol">you and idol</option>
-                <option value="movie_specific">movie specific</option>
-            </select>
-            <div id="season-error" class="text-danger"></div>
-        </div>
-    </div>
 
-    <div class='row'>
-        <div class='col-2'>
-            <label>Theme</label>
+        <div class='row'>
+            <div class='col-2'>
+                <label>Theme</label>
+            </div>
+            <div class='col-10'>
+                <input type="text" id="theme" name="theme" value="" required>
+                <div id="theme-error" class="text-danger"></div>
+                <label for="stheme">Sub Theme:</label>
+                <input type="text" id="stheme" name="stheme" value="" required>
+                <div id="stheme-error" class="text-danger"></div>
+            </div>
         </div>
-        <div class='col-10'>
-            <input type="text" id="theme" name="theme" value="">
-            <br>
-            <label for="stheme">Sub Theme:</label><br>
-            <input type="text" id="stheme" name="stheme" value="">
-            <br><br>
-        </div>
-    </div>
 
-    <div class='row'>
-        <div class='col-2'>
-            <label>Number of Teammates</label>
+        <div class='row'>
+            <div class='col-2'>
+                <label for="num_teammates">Number of Teammates</label>
+            </div>
+            <div class='col-10'>
+                <input type="number" id="num_teammates" name="num_teammates" min="1" max="10" required>
+                <div id="num_teammates-error" class="text-danger"></div>
+            </div>
         </div>
-        <div class='col-10'>
-            <input type="number" id="num_teammates" name="num_teammates" min="1" max="10">
-        </div>
-    </div>
 
-    <div class='row'>
-        <div class='col-2'>
-            <label>Hairstyle</label>
+        <div class='row'>
+            <div class='col-2'>
+                <label>Hairstyle</label>
+            </div>
+            <div class='col-10'>
+                <label><input type="radio" name="hairstyle" value="Short" required> Short</label>
+                <label><input type="radio" name="hairstyle" value="Medium" required> Medium</label>
+                <label><input type="radio" name="hairstyle" value="Long" required> Long</label>
+                <div id="hairstyle-error" class="text-danger"></div>
+            </div>
         </div>
-        <div class='col-10'>
-            <label><input type="radio" name="hairstyle" value="Short"> Short</label>
-            <label><input type="radio" name="hairstyle" value="Medium"> Medium</label>
-            <label><input type="radio" name="hairstyle" value="Long"> Long</label>
-        </div>
-    </div>
 
-    <div class='row'>
-        <div class='col-12'>
-            <button id='search'>Save Changes</button>
+        <div class='row'>
+            <div class='col-2'>
+                <label for="precure_photo">Image</label>
+            </div>
+            <div class='col-10'>
+                <input type="file" id="precure_photo" name="precure_photo" accept="image/*">
+                <div id="photo-error" class="text-danger"></div>
+            </div>
         </div>
-    </div>
+
+        <div class='row'>
+            <div class='col-12'>
+                <button id='search' type="button">Save Changes</button>
+            </div>
+        </div>
+    </form>
 
     <div id="successBanner" hidden></div>
     <div id="invalid-form" class="text-danger" hidden></div>
 
-
     <hr />
 
     <script>
-        const paramsString = window.location.search;
-        const searchParams = new URLSearchParams(paramsString);
+        const getField = (id) => document.getElementById(id);
+        const errorBanner = getField('invalid-form');
+        const successBanner = getField('successBanner');
 
-        fetch("/survey/" + searchParams.get('id'), { method: 'GET' })
-            .then((response) => response.json())
-            .then((json) => {
-                if (json.data && json.data.length > 0) {
-                    let row = json.data[0];
-                    document.getElementById('name').value = row.name;
-                    document.getElementById('season').value = row.season;
-                    document.getElementById('theme').value = row.theme;
-                    document.getElementById('stheme').value = row.stheme;
-                    document.getElementById('num_teammates').value = row.num_teammates;
-                    const hairstyleOptions = document.getElementsByName('hairstyle');
-                    for (let option of hairstyleOptions) {
-                        if (option.value === row.hairstyle) {
-                            option.checked = true;
-                            break;
-                        }
-                    }
-                } else {
-                    console.error('No record found! ✨ Maybe the ID is missing or incorrect.');
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        fetch(`/survey/${id}`)
+            .then(res => res.json())
+            .then(json => {
+                if (json.data?.length > 0) {
+                    const row = json.data[0];
+                    getField('name').value = row.name;
+                    getField('season').value = row.season;
+                    getField('theme').value = row.theme;
+                    getField('stheme').value = row.stheme;
+                    getField('num_teammates').value = row.num_teammates;
+                    [...document.getElementsByName('hairstyle')].forEach(r => {
+                        if (r.value === row.hairstyle) r.checked = true;
+                    });
                 }
-            })
+            });
 
+        getField('search').addEventListener('click', async () => {
+            errorBanner.hidden = true;
+            successBanner.hidden = true;
+            document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
 
-        document.getElementById('search').addEventListener('click', (event) => {
-            event.preventDefault();
-            let numTeammatesInput = document.getElementById('num_teammates').value;
-            const updatedData = {
-                name: document.getElementById('name').value.trim(),
-                season: document.getElementById('season').value,
-                theme: document.getElementById('theme').value,
-                stheme: document.getElementById('stheme').value.trim(),
-                num_teammates: numTeammatesInput ? parseInt(numTeammatesInput) : 1,
-                hairstyle: document.querySelector('input[name="hairstyle"]:checked')?.value || '',
+            let hasError = false;
+
+            const checkField = (id, msg) => {
+                const el = getField(id);
+                if (!el.value.trim()) {
+                    getField(`${id}-error`).innerText = msg;
+                    hasError = true;
+                }
             };
 
-            let fetchSettings = {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedData)
-            };
+            checkField('name', 'Name is required.');
+            checkField('season', 'Season is required.');
+            checkField('theme', 'Theme is required.');
+            checkField('stheme', 'Sub Theme is required.');
 
-            fetch("/Precure/" + searchParams.get('id'), fetchSettings)
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('⚠️ There was a problem saving changes. ⚠️');
-                    }
-                })
-                .then((json) => {
-                    alert('✨ Changes saved successfully! ✨');
-                })
-                .catch(error => {
-                    alert(error.message);
-                    console.error('Error:', error);
+            const num = getField('num_teammates');
+            if (!num.value || parseInt(num.value) < 1 || parseInt(num.value) > 10) {
+                getField('num_teammates-error').innerText = 'Enter a number between 1 and 10.';
+                hasError = true;
+            }
+
+            const hairstyle = document.querySelector('input[name="hairstyle"]:checked');
+            if (!hairstyle) {
+                getField('hairstyle-error').innerText = 'Select a hairstyle.';
+                hasError = true;
+            }
+
+            const fileField = getField('precure_photo');
+            const hasFile = fileField.files.length > 0;
+
+            if (hasError) {
+                errorBanner.innerText = '⚠️ Please fix the highlighted fields. ⚠️';
+                errorBanner.hidden = false;
+                return;
+            }
+
+            const formData = new FormData(getField('editForm'));
+            if (!hasFile) formData.delete('precure_photo');
+
+            try {
+                const res = await fetch(`/Precure/${id}`, {
+                    method: 'PUT',
+                    body: formData
                 });
 
+                const data = await res.json();
+
+                if (res.status === 400) {
+                    errorBanner.innerText = '⚠️ Server-side validation failed. ⚠️';
+                    errorBanner.hidden = false;
+                } else {
+                    successBanner.innerText = '✨ Changes saved successfully! ✨';
+                    successBanner.hidden = false;
+                }
+            } catch (err) {
+                console.error('Error updating:', err);
+                errorBanner.innerText = '⚠️ Something went wrong while updating. ⚠️';
+                errorBanner.hidden = false;
+            }
         });
-
-
     </script>
 
 </body>
