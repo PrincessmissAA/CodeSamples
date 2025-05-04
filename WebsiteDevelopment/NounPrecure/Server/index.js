@@ -6,9 +6,15 @@ const { check, validationResult } = require('express-validator');
 const Precure = require('./Model/Precure');
 
 // Create table on start
-Precure.createTable()
-    .then(() => console.log('🎀 Table checked/created successfully! 🎀'))
-    .catch((error) => console.error('Error creating table:', error));
+//Precure.createTable()
+    //.then(() => console.log('🎀 Table checked/created successfully! 🎀'))
+    //.catch((error) => console.error('Error creating table:', error));
+
+// new
+Precure.createTables()
+.then(() => console.log('🎀 All tables created successfully! 🎀'))
+.catch((error) => console.error('Error creating tables:', error));
+
 
 const app = express();
 app.use(express.static(path.join(__dirname, '../public')));

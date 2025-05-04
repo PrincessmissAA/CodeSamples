@@ -17,41 +17,93 @@ async function createTable() {
     return await connection.query(createSql);
 }
 
+async function createCharacterTable() {
+    const sql = `
+        CREATE TABLE IF NOT EXISTS characters (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            photo VARCHAR(255),
+            hairstyle VARCHAR(50),
+            color VARCHAR(50),
+            theme VARCHAR(100),
+            subtheme VARCHAR(100)
+        )`;
+    return await connection.query(sql);
+}
+
+async function createSeasonTable() {
+    const sql = `
+        CREATE TABLE IF NOT EXISTS season (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            season_name VARCHAR(100) NOT NULL,
+            year_aired YEAR
+        )`;
+    return await connection.query(sql);
+}
+
+async function createPrecureTeamTable() {
+    const sql = `
+        CREATE TABLE IF NOT EXISTS precure_team (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            characters_id INT,
+            season_id INT,
+            num_teammates INT,
+            FOREIGN KEY (characters_id) REFERENCES characters(id),
+            FOREIGN KEY (season_id) REFERENCES season(id)
+        )`;
+    return await connection.query(sql);
+}
+
+
+
 async function getAll(parameters = {}) {
-    let selectSql = `SELECT * FROM precure_survey WHERE 1=1`;
+    let selectSql = `
+        SELECT 
+            c.name,
+            c.photo,
+            c.hairstyle,
+            c.color,
+            c.theme,
+            c.subtheme,
+            s.season_name,
+            s.year_aired,
+            t.num_teammates
+        FROM precure_team t
+        INNER JOIN characters c ON t.characters_id = c.id
+        INNER JOIN season s ON t.season_id = s.id
+        WHERE 1 = 1`;
+    
     const queryParams = [];
 
     if (parameters.name) {
-        selectSql += ` AND name = ?`;
+        selectSql += ` AND c.name = ?`;
         queryParams.push(parameters.name);
     }
-    if (parameters.season) {
-        selectSql += ` AND season = ?`;
-        queryParams.push(parameters.season);
-    }
+
     if (parameters.theme) {
-        selectSql += ` AND theme = ?`;
+        selectSql += ` AND c.theme = ?`;
         queryParams.push(parameters.theme);
     }
-    if (parameters.stheme) {
-        selectSql += ` AND stheme = ?`;
-        queryParams.push(parameters.stheme);
-    }
-    if (parameters.num_teammates) {
-        selectSql += ` AND num_teammates = ?`;
-        queryParams.push(parameters.num_teammates);
+
+    if (parameters.subtheme) {
+        selectSql += ` AND c.subtheme = ?`;
+        queryParams.push(parameters.subtheme);
     }
 
-    if (parameters.order) {
-        const allowedColumns = ['season', 'name', 'theme', 'num_teammates'];
-        if (allowedColumns.includes(parameters.order)) {
-            selectSql += ` ORDER BY ${parameters.order}`;
-        }
+    if (parameters.season) {
+        selectSql += ` AND s.season_name = ?`;
+        queryParams.push(parameters.season);
+    }
+
+    if (parameters.order && ['season_name', 'name', 'theme', 'num_teammates'].includes(parameters.order)) {
+        selectSql += ` ORDER BY ${parameters.order}`;
     }
 
     selectSql += ` LIMIT 100`;
+
     return await connection.query(selectSql, queryParams);
 }
+
 
 async function getById(id) {
     const selectSql = `SELECT * FROM precure_survey WHERE id = ?`;
@@ -112,11 +164,18 @@ async function insert(parameters = {}) {
     return await connection.query(insertSQL, queryParameters);
 }
 
+async function createTables() {
+    await createCharacterTable();
+    await createSeasonTable();
+    await createPrecureTeamTable();
+}
+
+
 module.exports = {
     getAll,
     getById,
     insert,
     edit,
     remove,
-    createTable
+    createTables
 };
