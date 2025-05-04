@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Confirm Delete - Precure Survey</title>
+  <link rel='stylesheet' href='style.css'>
+</head>
+<body>
+  <h1>⚠️ Confirm Delete</h1>
+  <p>Are you *super sure* you want to delete this magical Precure?</p>
+  <p>This action can't be undone</p>
+
+  <div class="row">
+    <button id="confirmDelete">Yes, delete her </button>
+    <a href="results.html"><button>No, go back! </button></a>
+  </div>
+
+  <div id="successBanner" hidden></div>
+  <div id="invalid-form" hidden></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const successBanner = document.getElementById('successBanner');
+    const errorBanner = document.getElementById('invalid-form');
+
+    document.getElementById('confirmDelete').addEventListener('click', () => {
+      fetch(`/Precure/${id}`, { method: 'DELETE' })
+        .then(res => res.json())
+        .then(json => {
+          successBanner.innerText = '🌸 Deleted successfully! Redirecting... 🌸';
+          successBanner.hidden = false;
+          setTimeout(() => {
+            window.location.href = 'results.html';
+          }, 1500);
+        })
+        .catch(err => {
+          errorBanner.innerText = ' Something went wrong...';
+          errorBanner.hidden = false;
+          console.error('Delete error:', err);
+        });
+    });
+  </script>
+</body>
+</html>
