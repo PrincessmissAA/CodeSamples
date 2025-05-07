@@ -1,68 +1,74 @@
 <!doctype html>
 <html>
-    <head>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>            
-        <title>Precure Survey</title>
-        <link rel='stylesheet' href='style.css'>
-    </head>
-    <body>
-        <h1>Precure Form</h1>
 
-        <hr/>
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Precure Survey</title>
+    <link rel='stylesheet' href='style.css'>
+</head>
 
-        <div id='results' class='overflow table-responsive'>
-            results go here.
-        </div>
-       
-        <script>
-            const isEmpty = (obj) => Object.keys(obj).length === 0;
+<body>
+    <h1>Precure Form</h1>
 
-            fetch("/Precure/", {method: 'GET'})
-                    .then((response) => {
-                        return new Promise((resolve) => response.json()
-                            .then((json) => resolve({
-                                status: response.status,
-                                json,
-                            })
-                        ));
+    <hr />
+
+    <div id='results' class='overflow table-responsive'>
+        results go here.
+    </div>
+
+    <script>
+        const isEmpty = (obj) => Object.keys(obj).length === 0;
+
+        fetch("/Precure/", { method: 'GET' })
+            .then((response) => {
+                return new Promise((resolve) => response.json()
+                    .then((json) => resolve({
+                        status: response.status,
+                        json,
                     })
-                    .then(({status, json}) => {
-                        if (200 === status) {
-                            let displayTable = '<table>' +
-                            '<thead>' +
-                            '<tr>' +
-                            '<th>ID</th>' +
-                            '<th>name</th>' +
-                            '<th >season</th>' +
-                            '<th >theme</th>' +
-                            '<th >stheme</th>' +
-                            '<th >num of teammates</th>' +
-                            '<th >Hairstyle</th>' +
-                            '</tr>' +
-                            '</thead>' +
-                            '<tbody>';
-                        if (typeof json.data !== 'undefined') {
-                            for (row of json.data) {
-                                displayTable += '<tr>' +
-                                    '<td>' + row.id + '</td>' +
-                                    '<td>' + row.name + '</td>' +
-                                    '<td>' + row.season + '</td>' +
-                                    '<td>' + row.theme + '</td>' +
-                                    '<td>' + row.sheme + '</td>' +
-                                    '<td>' + row.numOfTeammates + '</td>' +
-                                    '<td>' + row.hairstyle + '</td>' +
-                                    '<td><a href="edit.html?id=' + row.id + '">Edit</a></td>' +
-                                    <a href="#" onclick="confirmDelete(${row.id})">Delete</a> +
-                                    '</tr>';
-                            }
-                        }
-                        document.getElementById('results').innerHTML = displayTable;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-           
-        </script>
-    </body>
+                    ));
+            })
+            .then(({ status, json }) => {
+                if (200 === status) {
+                    let displayTable = '<table>' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th>Name</th>' +
+                        '<th>Photo</th>' +
+                        '<th>Hairstyle</th>' +
+                        '<th>Color</th>' +
+                        '<th>Theme</th>' +
+                        '<th>Subtheme</th>' +
+                        '<th>Season</th>' +
+                        '<th>Year Aired</th>' +
+                        '<th>Teammates</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                    for (const row of json.data) {
+                        displayTable += '<tr>' +
+                            `<td>${row.name}</td>` +
+                            `<td><img src="uploads/${row.photo}" alt="${row.name}" width="50"></td>` +
+                            `<td>${row.hairstyle}</td>` +
+                            `<td>${row.color}</td>` +
+                            `<td>${row.theme}</td>` +
+                            `<td>${row.subtheme}</td>` +
+                            `<td>${row.season_name}</td>` +
+                            `<td>${row.year_aired}</td>` +
+                            `<td>${row.num_teammates}</td>` +
+                            '</tr>';
+                    }
+                    displayTable += '</tbody></table>';
+
+                    document.getElementById('results').innerHTML = displayTable;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    </script>
+</body>
+
 </html>

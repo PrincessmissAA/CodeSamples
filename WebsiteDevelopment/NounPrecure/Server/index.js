@@ -128,4 +128,25 @@ app.delete('/Precure/:id', async (req, res) => {
     }
 });
 
+app.get('/characters/', async (req, res) => {
+    const [rows] = await connection.query('SELECT * FROM characters');
+    res.json({ data: rows });
+});
+
+app.get('/season/', async (req, res) => {
+    const [rows] = await connection.query('SELECT * FROM season');
+    res.json({ data: rows });
+});
+
+app.get('/precure_team/', async (req, res) => {
+    const [rows] = await connection.query(`
+        SELECT t.id, c.name AS character_name, s.season_name, t.num_teammates
+        FROM precure_team t
+        JOIN characters c ON t.characters_id = c.id
+        JOIN season s ON t.season_id = s.id
+    `);
+    res.json({ data: rows });
+});
+
+
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
